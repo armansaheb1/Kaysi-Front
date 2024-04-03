@@ -12,7 +12,7 @@
           <br>
           <br>
           <label for="">نوع ارز</label>
-          <select @change="get_image(currency)" v-model="currency" class="form-control">
+          <select @change="get_plans(currency)" v-model="currency" class="form-control">
             <option v-for="item in currencies" v-bind:key="item" :value="item.id">
               {{ item.name }}
             </option>

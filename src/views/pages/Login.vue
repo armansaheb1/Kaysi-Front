@@ -4,7 +4,7 @@
       <CRow class="justify-content-center">
         <CCol :md="8">
           <CCardGroup>
-            <CCard class="p-4">
+            <CCard class="p-4" style="width: 60%!important; float: left!important">
               <CCardBody>
                 <CForm>
                   <h1>ورود</h1>
@@ -35,7 +35,7 @@
                 </CForm>
               </CCardBody>
             </CCard>
-            <CCard class="text-white bg-primary py-5" style="width: 44%">
+            <CCard class="text-white bg-primary py-5" style="width: 38%">
               <CCardBody class="text-center">
                 <div>
                   <h2>ثبت نام</h2>
@@ -76,10 +76,12 @@ export default {
           axios.defaults.headers.common.Authorization = 'Token ' + token
           this.$store.state.isAuthenticated = true
           localStorage.setItem('token', token)
+          this.$store.state.loginpop = false
+          this.$store.state.loginpopmini = false
+          this.$store.state.registerpop = false
           const toPath = this.$route.go || '/dashboard'
           this.$router.push(toPath)
-          this.$store.state.loginpop = false
-          this.$store.state.registerpop = false
+
         }
 
         )

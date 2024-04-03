@@ -6,7 +6,7 @@
   </vue-final-modal>
 
 
-  <vue-final-modal style="background:none; overflow: hidden; margin: 5%; margin-top: 1%"
+  <vue-final-modal style="background:none; overflow: hidden; margin: 5%; margin-top: 1% ; width: 95%"
     v-model="$store.state.loginpopmini">
     <loginmini />
   </vue-final-modal>

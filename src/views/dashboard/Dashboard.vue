@@ -14,11 +14,7 @@
                 <CButton color="primary" class="float-end">
                   <CIcon icon="cil-cloud-download" />
                 </CButton>
-                <CButtonGroup
-                  class="float-end me-3"
-                  role="group"
-                  aria-label="Basic outlined example"
-                >
+                <CButtonGroup class="float-end me-3" role="group" aria-label="Basic outlined example">
                   <CButton color="secondary" variant="outline">Day</CButton>
                   <CButton color="secondary" variant="outline" active>Month</CButton>
                   <CButton color="secondary" variant="outline">Year</CButton>
@@ -30,13 +26,8 @@
             </CRow>
           </CCardBody>
           <CCardFooter>
-            <CRow
-              :xs="{ cols: 1, gutter: 4 }"
-              :sm="{ cols: 2 }"
-              :lg="{ cols: 4 }"
-              :xl="{ cols: 5 }"
-              class="mb-2 text-center"
-            >
+            <CRow :xs="{ cols: 1, gutter: 4 }" :sm="{ cols: 2 }" :lg="{ cols: 4 }" :xl="{ cols: 5 }"
+              class="mb-2 text-center">
               <CCol>
                 <div class="text-body-secondary">Visits</div>
                 <div class="fw-semibold text-truncate">29.703 Users (40%)</div>
@@ -90,11 +81,7 @@
                   </CCol>
                 </CRow>
                 <hr class="mt-0" />
-                <div
-                  v-for="item in progressGroupExample1"
-                  :key="item.title"
-                  class="progress-group mb-4"
-                >
+                <div v-for="item in progressGroupExample1" :key="item.title" class="progress-group mb-4">
                   <div class="progress-group-prepend">
                     <span class="text-body-secondary small">{{ item.title }}</span>
                   </div>
@@ -350,5 +337,9 @@ export default {
       progressGroupExample3,
     }
   },
+  mounted() {
+    this.$store.state.loginpop = false
+    this.$store.state.registerpop = false
+  }
 }
 </script>
