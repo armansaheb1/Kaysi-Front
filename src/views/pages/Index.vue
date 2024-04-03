@@ -130,7 +130,7 @@ export default {
   text-align: center
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1023px) {
 
   .lil a {
     font-size: 14px;
@@ -164,7 +164,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 767px) {
   .wals {
     width: 94%;
     float: left;
