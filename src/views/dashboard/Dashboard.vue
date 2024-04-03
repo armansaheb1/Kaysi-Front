@@ -16,7 +16,7 @@
                 </CButton>
                 <CButtonGroup class="float-end me-3" role="group" aria-label="Basic outlined example">
                   <CButton color="secondary" variant="outline">Day</CButton>
-                  <CButton color="secondary" variant="outline" active>Month</CButton>
+                  <CButton color="secondary" variant="outline" active style="z-index: 0">Month</CButton>
                   <CButton color="secondary" variant="outline">Year</CButton>
                 </CButtonGroup>
               </CCol>

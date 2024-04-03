@@ -1,17 +1,22 @@
 <template>
   <router-view />
 
-  <vue-final-modal style="width:100% ; background:none; overflow-y: auto" v-model="$store.state.loginpop">
+  <vue-final-modal
+    style="position: fixed; top:50px;width:100% ; background:none; overflow-y: auto; z-index: 1000!important"
+    v-model="$store.state.loginpop">
     <login />
   </vue-final-modal>
 
 
-  <vue-final-modal style="background:none; overflow: hidden; margin: 5%; margin-top: 1% ; width: 95%"
+  <vue-final-modal
+    style="position: fixed; top:50px;background:none; overflow: hidden; margin: 5%; margin-top: 1% ; width: 95%; z-index: 1000!important"
     v-model="$store.state.loginpopmini">
     <loginmini />
   </vue-final-modal>
 
-  <vue-final-modal style="width:100% ; background:none; overflow-y: auto" v-model="$store.state.registerpop">
+  <vue-final-modal
+    style="position: fixed; top:50px;width:100% ; background:none; overflow-y: auto; z-index: 1000!important"
+    v-model="$store.state.registerpop">
     <register />
   </vue-final-modal>
 

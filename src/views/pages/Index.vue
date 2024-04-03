@@ -1,13 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="">
+  <div>
     <div style="width: 100%; top : 0; background-color: rgba(0, 0, 0, 0.4)">
-      <img style="width: 100%; float: left; z-index: -10000; position: relative" src="/banner.jpg" alt="">
+      <img style="width: 100%;  z-index: -10000" src="/banner.jpg" alt="">
       <nav
-        style="border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: relative; z-index:  100">
-        <ul style="z-index:  100; position: absolute; margin : 0; list-style: none;">
+        style="border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: absolute; top: 0; z-index:  100">
+        <ul style="z-index:  100; margin : 0; list-style: none;">
           <li style="" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="">
-              <img src="/logo.png" style="height: 50px; border-radius: 50%;" alt="">
+              <img src="/logo.png" style="border-radius: 50%;height: 50px; border-radius: 50%;" alt="">
             </a>
           </li>
           <li style="" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="">خانه</a>
@@ -36,24 +36,66 @@
         چرا کی سی؟
       </h3>
       <br>
-      <div style="clear: both"></div>
+
       <div style="display: flex; width: 32%; margin: 0.5%; border-radius: 2%; float: right; text-align: center"
         class="card">
-        <div class="card-header">Title</div>
-        <div class="card-body"></div>
+        <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt=""></div>
+        <div class="card-body" style="text-align: justify; direction: rtl;">
+          <h3>
+            کی سی چیست ؟
+          </h3>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+        </div>
       </div>
       <div style="display: flex; width: 32%; margin: 0.5%; border-radius: 2%; float: right; text-align: center"
         class="card">
-        <div class="card-header">Title</div>
-        <div class="card-body"></div>
+        <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt=""></div>
+        <div class="card-body" style="text-align: justify; direction: rtl;">
+          <h3>
+            کی سی چیست ؟
+          </h3>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+        </div>
       </div>
       <div style="display: flex; width: 32%; margin: 0.5%; border-radius: 2%; float: right; text-align: center"
         class="card">
-        <div class="card-header">Title</div>
-        <div class="card-body"></div>
+        <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt=""></div>
+        <div class="card-body" style="text-align: justify; direction: rtl;">
+          <h3>
+            کی سی چیست ؟
+          </h3>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+        </div>
       </div>
     </div>
+    <div style="clear: both;"></div>
+    <div style="height: 100px">
+
+    </div>
+
   </div>
+
 </template>
 
 <script>

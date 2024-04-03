@@ -36,7 +36,7 @@
           <CCardBody class="text-center">
             <div>
               <h2>ثبت نام</h2>
-              <p>
+              <p style="font-size: 12px;">
                 اگر هنوز موفق به ثبت نام نشده اید.
               </p>
               <CButton @click="$store.state.loginpop = false; $store.state.registerpop = true;" color="light"
