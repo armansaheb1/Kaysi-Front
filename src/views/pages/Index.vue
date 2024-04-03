@@ -37,8 +37,7 @@
       </h3>
       <br>
 
-      <div style="display: flex; width: 32%; margin: 0.5%; border-radius: 2%; float: right; text-align: center"
-        class="card">
+      <div style="" class="card third">
         <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt=""></div>
         <div class="card-body" style="text-align: justify; direction: rtl;">
           <h3>
@@ -54,8 +53,7 @@
           </p>
         </div>
       </div>
-      <div style="display: flex; width: 32%; margin: 0.5%; border-radius: 2%; float: right; text-align: center"
-        class="card">
+      <div style="" class="card third">
         <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt=""></div>
         <div class="card-body" style="text-align: justify; direction: rtl;">
           <h3>
@@ -71,8 +69,7 @@
           </p>
         </div>
       </div>
-      <div style="display: flex; width: 32%; margin: 0.5%; border-radius: 2%; float: right; text-align: center"
-        class="card">
+      <div style="" class="card third">
         <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt=""></div>
         <div class="card-body" style="text-align: justify; direction: rtl;">
           <h3>
@@ -124,6 +121,15 @@ export default {
   font-size: 24px;
 }
 
+.third {
+  display: flex;
+  width: 32%;
+  margin: 0.5%;
+  border-radius: 2%;
+  float: right;
+  text-align: center
+}
+
 @media only screen and (max-width: 700px) {
 
   .lil a {
@@ -147,5 +153,32 @@ export default {
     float: right;
     margin: 18px 10px
   }
+
+  .third {
+    display: flex;
+    width: 49%;
+    margin: 0.5%;
+    border-radius: 2%;
+    float: right;
+    text-align: center
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .wals {
+    width: 94%;
+    float: left;
+    margin: 3%;
+  }
+
+  .third {
+    display: flex;
+    width: 99%;
+    margin: 0.5%;
+    border-radius: 2%;
+    float: right;
+    text-align: center
+  }
+
 }
 </style>
