@@ -4,20 +4,28 @@
     <CCol>
       <input @input="search()" v-model="searchtxt" type="text" class="form-control" placeholder="... جستوجو"
         style="text-align: right;" name="" id=""><br>
+
+      <label for="" style="text-align: right;width: 100%;">از این قسمت ارز مورد نظر را انتخاب کنید</label>
+      <select v-model="cur" style="text-align: center;" @change="get_miners()" name="" class="form-control" id="">
+        <option v-for="item in curs" v-bind:key="item" :value="item">
+          {{ item }}
+        </option>
+      </select>
+      <br>
       <CCard>
         <CCardHeader>
           خرید پلن جدید
 
         </CCardHeader>
         <CCardBody>
-          <CCard v-for="item in miners" v-bind:key="item" class="third">
+          <CCard v-for="item in miners" v-bind:key="item" style="margin-bottom: 15px" class="third">
             <CCardHeader>
               {{ item.title }}
               <img :src="item.get_cur_pic" alt="" style="position:relative; top: 5px; z-index: 10;width: 10%">
             </CCardHeader>
             <CCardBody>
 
-              <img :src="item.get_pic" style="width: 90%; margin: 5%;" alt="">
+              <img :src="item.get_pic" style="width: 50%; margin: 2.5% 25%;" alt="">
 
             </CCardBody>
 
@@ -63,13 +71,16 @@ export default {
     showModal: [],
     miners: [],
     minersback: [],
-    searchtxt: ''
+    searchtxt: '',
+    cur: '',
+    curs: []
 
   }),
   components: {
   },
   mounted() {
-    this.get_miners()
+    this.get_currencies()
+
   },
   methods: {
     login() {
@@ -77,11 +88,21 @@ export default {
     },
     async get_miners() {
       await axios
-        .get(`miners`)
+        .get(`miners/${this.cur}`)
         .then(response => response.data)
         .then(response => {
           this.miners = response
           this.minersback = response
+        })
+    },
+    async get_currencies() {
+      await axios
+        .get(`minerscurrencies`)
+        .then(response => response.data)
+        .then(response => {
+          this.curs = response
+          this.cur = response[0]
+          this.get_miners()
         })
     },
     filter() {
