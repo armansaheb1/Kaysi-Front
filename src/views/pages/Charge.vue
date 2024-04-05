@@ -2,41 +2,28 @@
 <template>
   <CRow>
     <CCol>
-      <CCard>
-        <CCardHeader>
-          موجودی حساب ها
+      <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
+        <div v-for="item in  currency " v-bind:key="item" class="card wals" style="padding: 0 5%;">
+          <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
+            :src="item.get_image">
 
-        </CCardHeader>
-        <CCardBody>
-          <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
-            <div v-for="item in  currency " v-bind:key="item" class="card wals" style="">
-              <div class="card-header"><img
-                  style="position:relative;width: 29.5%; margin: 0 35%; margin-top: 0px;float:none; aspect-ratio: 1/1;"
-                  :src="item.get_image">
-              </div>
-              <div class=" card-body">
-
-                <img style="position:relative;width: 40%; margin: 0 30%; margin-top: 0px;float:none; aspect-ratio: 1/1;"
-                  :src="item.get_qr"><br><br>
-                <input type="text" name="" id="" class="form-control" :value="item.address"
-                  style="border-radius: 5px 5px 0 0;">
-                <button class="btn btn-warning"
-                  style="width: 100%; margin: auto;border-radius:  0 0 5px 5px; font-family: 'Yekan'!important;">کپی</button><br>
-                <br>
-                <form action="admindecrease" method="POST">
-                  <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-                  <input class="form-control" type="text" name="" id="" placeholder="کد یا لینک پیگیری"><br>
-                  <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
-                    ثبت
-                    واریز</button>
+          <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
+            :src="item.get_qr">
+          <input type="text" name="" id="" class="form-control" :value="item.address"
+            style="border-radius: 5px 5px 0 0;">
+          <button class="btn btn-warning"
+            style="width: 100%; margin: auto;border-radius:  0 0 5px 5px; font-family: 'Yekan'!important;">کپی</button><br>
+          <form action="admindecrease" method="POST">
+            <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
+            <input class="form-control" type="text" name="" id="" placeholder="کد یا لینک پیگیری"><br>
+            <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
+              ثبت
+              واریز</button><br><br>
 
 
-                </form>
-              </div>
-            </div>
-          </div>
-        </CCardBody>
-      </CCard><br>
+          </form>
+        </div>
+      </div>
 
     </CCol>
   </CRow>
@@ -74,12 +61,14 @@ export default {
         })
     },
     async get_currency() {
+      var id = this.$route.params.id
       await axios
-        .get(`currencies`)
+
+        .post(`currencies/${id}`)
         .then(response => response.data)
         .then(response => {
           console.log(response)
-          this.currency = response
+          this.currency = [response]
         })
     }
   }
@@ -136,14 +125,15 @@ a {
 }
 
 .wals {
-  width: 27%;
+  width: 80%;
   float: left;
-  margin: 3%
+  margin: 10%;
+  margin-top: 0
 }
 
 @media only screen and (max-width: 700px) {
   .wals {
-    width: 44%;
+    width: 94%;
     float: left;
     margin: 3%;
   }

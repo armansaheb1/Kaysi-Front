@@ -4,7 +4,7 @@
       <CRow class="justify-content-center">
         <CCol :md="8">
           <CCardGroup>
-            <CCard class="p-4" style="width: 60%!important; float: left!important">
+            <CCard class="p-4" style="height: 310px;width: 60%!important; float: left!important">
               <CCardBody>
                 <CForm>
                   <h1>ورود</h1>
@@ -35,7 +35,7 @@
                 </CForm>
               </CCardBody>
             </CCard>
-            <CCard class="text-white bg-primary py-5" style="width: 38%">
+            <CCard class="text-white bg-primary py-5" style="height: 310px;width: 38%">
               <CCardBody class="text-center">
                 <div>
                   <h2>ثبت نام</h2>

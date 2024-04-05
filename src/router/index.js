@@ -72,6 +72,21 @@ const routes = [
         component: () => import('@/views/pages/Plans.vue'),
       },
       {
+        path: '/plan',
+        name: 'plan',
+        component: () => import('@/views/pages/Plan.vue'),
+      },
+      {
+        path: '/miners',
+        name: 'miners',
+        component: () => import('@/views/pages/miners.vue'),
+      },
+      {
+        path: '/miner',
+        name: 'miner',
+        component: () => import('@/views/pages/miner.vue'),
+      },
+      {
         path: '/transactions',
         name: 'transactions',
         component: () => import('@/views/pages/Transactions.vue'),
@@ -87,12 +102,12 @@ const routes = [
         component: () => import('@/views/pages/Jobs.vue'),
       },
       {
-        path: '/charge',
+        path: '/charge/:id',
         name: 'charge',
         component: () => import('@/views/pages/Charge.vue'),
       },
       {
-        path: '/withdraw',
+        path: '/withdraw/:id',
         name: 'withdraw',
         component: () => import('@/views/pages/Withdraw.vue'),
       },

@@ -7,26 +7,40 @@
           موجودی حساب ها
 
         </CCardHeader>
-        <CCardBody>
-          <div class="autoplay" style="width: 90%;margin: auto;height:auto;overflow-y:hidden">
-            <div v-for="item in  wallets " v-bind:key="item" class="card card-body wals">
-              <img style="position:relative;width: 60%; margin: 0 20%; margin-top: 20px;float:none; aspect-ratio:1/1;"
-                :src="item[0]">
-              <h6 style="margin: auto; margin-top: 20px;text-align: center;font-family:'calibri';">{{ item[1] }}</h6>
-              <h4 style="margin: auto; margin-top: 20px;text-align: center;font-family:'calibri';">{{ item[2] }}</h4>
-              <br>
-              <form>
-                <a href="/dashboard/charge" class="btn btn-success form-control"> واریز</a>
+        <div class="autoplay" style="width: 90%;margin: auto;height:auto;overflow-y:hidden">
+          <div>
+            <table style="direction: rtl; " class="table">
+              <thead>
+                <tr>
+                  <th class="col-3">ارز</th>
+                  <th class="col-3" style="text-align: center;">موجودی</th>
+                  <th class="col-6 notmob" style="text-align: left;">عملیات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in  wallets " v-bind:key="item">
+                  <td class="col-3" style="text-align: right;height: 60px"><img
+                      style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
+                      :src="item[0]">
+                    <h6 style="margin: auto; margin-top: 20px;text-align: center;font-family:'calibri';">{{ item[2] }}
+                    </h6>
+                  </td>
 
-              </form><br>
-              <form action="admindecrease" method="POST">
-                <a href="/dashboard/withdraw" class="btn btn-danger form-control"> برداشت</a>
+                  <td class="col-3" style="text-align: center;">
+                    <h6 style="margin: auto; margin-top: 20px;text-align: center;font-family:'calibri';">{{ item[1] }}
+                    </h6>
 
-
-              </form>
-            </div>
+                    <br>
+                  </td>
+                  <td class="col-6 notmob" style="text-align: left;">
+                    <a style="margin: 5px" :href="`/charge/${item[3]}`" class="btn btn-success"> واریز</a>
+                    <a style="margin: 5px" :href="`/withdraw/${item[3]}`" class="btn btn-danger"> برداشت</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </CCardBody>
+        </div>
       </CCard><br>
 
     </CCol>
@@ -150,6 +164,10 @@ li {
 
   .nmobile {
     display: block;
+  }
+
+  .notmob {
+    display: none;
   }
 }
 

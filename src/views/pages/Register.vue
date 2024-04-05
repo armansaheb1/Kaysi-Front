@@ -1,10 +1,15 @@
 <template>
   <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+
+
+
     <CContainer>
       <CRow class="justify-content-center">
         <CCol :md="9" :lg="7" :xl="6">
           <CCard class="mx-4">
             <CCardBody class="p-4">
+              <button @click="$store.state.registerpop = false" style="float:left;color: white;  border-radius: 50%"
+                class="btn btn-danger">-</button>
               <CForm>
                 <h1>Register</h1>
                 <p class="text-body-secondary">Create your account</p>

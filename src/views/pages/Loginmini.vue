@@ -2,7 +2,7 @@
   <CRow class="justify-content-center" style="overflow: hidden;">
     <CCol :md="8">
       <CCardGroup>
-        <CCard class="p-4" style="width: 60%!important; float: left!important">
+        <CCard class="p-4" style="height: 310px;width: 60%!important; float: left!important">
           <CCardBody>
             <CForm>
               <h1>ورود</h1>
@@ -32,7 +32,7 @@
             </CForm>
           </CCardBody>
         </CCard>
-        <CCard class="text-white bg-primary py-5" style="width: 38%">
+        <CCard class="text-white bg-primary py-5" style="height: 310px;width: 38%">
           <CCardBody class="text-center">
             <div>
               <h2>ثبت نام</h2>
@@ -57,14 +57,19 @@ import axios from 'axios'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
+  data() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
   methods: {
     async login() {
-      var formData = {
-        username: this.username.toLowerCase(),
-        password: this.password
-      }
       await axios
-        .post('/token/login', formData)
+        .post('/token/login', {
+          username: this.username.toLowerCase(),
+          password: this.password
+        })
         .then(response => {
           const token = response.data.auth_token
           this.$store.commit('setToken', token)

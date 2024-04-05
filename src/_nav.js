@@ -20,8 +20,36 @@ export default [
   {
     component: 'CNavItem',
     name: 'پلن ها',
-    to: '/plans',
     icon: 'cil-list',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'خرید پلن',
+        to: '/plan',
+      },
+      {
+        component: 'CNavItem',
+        name: 'پلن های من',
+        to: '/plans',
+      },
+    ],
+  },
+  {
+    component: 'CNavItem',
+    name: 'ماینر ها',
+    icon: 'cil-star',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'خرید ماینر',
+        to: '/miner',
+      },
+      {
+        component: 'CNavItem',
+        name: 'ماینر های من',
+        to: '/miners',
+      },
+    ],
   },
   {
     component: 'CNavGroup',
@@ -70,7 +98,7 @@ export default [
       },
     ],
   },
-  {
+/*  {
     component: 'CNavItem',
     name: 'شارژ حساب',
     to: '/charge',
@@ -82,6 +110,7 @@ export default [
     to: '/withdraw',
     icon: 'cil-chart-pie',
   },
+*/
   {
     component: 'CNavItem',
     name: 'تیکت',

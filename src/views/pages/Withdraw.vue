@@ -2,36 +2,30 @@
 <template>
   <CRow>
     <CCol>
-      <CCard>
-        <CCardHeader>
-          برداشت از حساب ها
-
-        </CCardHeader>
-        <CCardBody>
-          <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
-            <div v-for="item in  currency " v-bind:key="item" class="card wals" style="">
-              <div class="card-header"><img
-                  style="position:relative;width: 30%; margin: 0 35%; margin-top: 0px;float:none; aspect-ratio: 1/1"
-                  :src="item[0]">
-              </div>
-              <div class=" card-body">
+      <CCardBody>
+        <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
+          <div v-for="item in  currency " v-bind:key="item" class="card wals" style="">
+            <div class="card-header"><img
+                style="position:relative;width: 26%; margin: 0 37%; margin-top: 0px;float:none; aspect-ratio: 1/1"
+                :src="item[0]">
+            </div>
+            <div class=" card-body">
 
 
-                <form action="admindecrease" method="POST">
-                  <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
-                  <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-                  <input class="form-control" type="text" name="" id="" placeholder="آدرس ولت"><br>
-                  <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
-                    ثبت
-                    واریز</button>
+              <form action="admindecrease" method="POST">
+                <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
+                <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
+                <input class="form-control" type="text" name="" id="" placeholder="آدرس ولت"><br>
+                <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
+                  ثبت
+                  واریز</button>
 
 
-                </form>
-              </div>
+              </form>
             </div>
           </div>
-        </CCardBody>
-      </CCard><br>
+        </div>
+      </CCardBody>
 
     </CCol>
   </CRow>
@@ -71,8 +65,9 @@ export default {
         })
     },
     async get_currency() {
+      var id = this.$route.params.id
       await axios
-        .get(`wallets`)
+        .post(`wallets/${id}`)
         .then(response => response.data)
         .then(response => {
           console.log(response)
@@ -133,20 +128,15 @@ a {
 }
 
 .wals {
-  width: 27%;
+  width: 80%;
   float: left;
-  margin: 3%
-}
-
-.wals {
-  width: 27%;
-  float: left;
-  margin: 3%
+  margin: 10%;
+  margin-top: 0
 }
 
 @media only screen and (max-width: 700px) {
   .wals {
-    width: 44%;
+    width: 94%;
     float: left;
     margin: 3%;
   }

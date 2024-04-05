@@ -9,13 +9,12 @@
 
 
   <vue-final-modal
-    style="position: fixed; top:50px;background:none; overflow: hidden; margin: 5%; margin-top: 1% ; width: 95%; z-index: 1000!important"
+    style="position: fixed; top:50px;background:none; overflow: hidden; margin: 10% 2.5%; width: 95%; z-index: 1000!important"
     v-model="$store.state.loginpopmini">
     <loginmini />
   </vue-final-modal>
 
-  <vue-final-modal
-    style="position: fixed; top:50px;width:100% ; background:none; overflow-y: auto; z-index: 1000!important"
+  <vue-final-modal style="position: fixed; top:0;width:100% ; z-index: 10000!important; overflow-y: auto"
     v-model="$store.state.registerpop">
     <register />
   </vue-final-modal>

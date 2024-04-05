@@ -2,16 +2,36 @@
 <template>
   <CRow>
     <CCol>
-
       <CCard>
         <CCardHeader>
-          پلن های فعال
+          خرید پلن جدید
 
         </CCardHeader>
         <CCardBody>
+          <img v-if="pic" :src="pic" alt="" style="width: 16%; margin: 0 42%;">
+          <br>
+          <br>
+          <label for="">نوع ارز</label>
+          <select @change="get_plans(currency)" v-model="currency" class="form-control">
+            <option v-for="item in currencies" v-bind:key="item" :value="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+          <br>
+          <label for="">پلن</label>
+          <select v-if="currency" v-model="plan" class="form-control">
+            <option v-for="item in plans" v-bind:key="item" :value="item.id">
+              {{ item.title }}
+            </option>
+          </select><br>
+          <label for="">مبلغ</label>
+          <input class="form-control" type="text" name="" id=""><br><br>
+
+          <button class="btn btn-success"> خرید</button>
 
         </CCardBody>
-      </CCard>
+      </CCard><br>
+
     </CCol>
   </CRow>
 </template>

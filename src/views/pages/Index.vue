@@ -6,7 +6,7 @@
       <nav
         style="border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: absolute; top: 0; z-index:  100">
         <ul style="z-index:  100; margin : 0; list-style: none;">
-          <li style="" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="">
+          <li style="margin-top: 16px" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="">
               <img src="/logo.png" style="border-radius: 50%;height: 50px; border-radius: 50%;" alt="">
             </a>
           </li>
@@ -154,22 +154,14 @@ export default {
 
   .lil {
     float: left;
-    margin: 18px 10px
+    margin: 25px 5px
   }
 
   .lir {
     float: right;
-    margin: 18px 10px
+    margin: 25px 5px
   }
 
-  .third {
-    display: flex;
-    width: 49%;
-    margin: 0.5%;
-    border-radius: 2%;
-    float: right;
-    text-align: center
-  }
 }
 
 @media only screen and (max-width: 767px) {
