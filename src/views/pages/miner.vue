@@ -14,8 +14,7 @@
       <br>
       <CCard>
         <CCardHeader>
-          خرید پلن جدید
-
+          اجاره ماینر
         </CCardHeader>
         <CCardBody>
           <CCard v-for="item in miners" v-bind:key="item" style="margin-bottom: 15px" class="third">
@@ -46,7 +45,8 @@
                 میزان سود ماهیانه : {{ item.profit }}<a style="font: 10px arial;margin-left: 5px;">{{ item.get_cur
                   }}</a>
               </p>
-              <button class="btn btn-success form-control">اجاره کنید</button>
+              <button class="btn btn-primary form-control">اجاره کنید</button>
+              <br><br>
             </CCardFooter>
           </CCard>
         </CCardBody>

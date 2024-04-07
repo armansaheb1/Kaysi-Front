@@ -112,6 +112,11 @@ const routes = [
         component: () => import('@/views/pages/Withdraw.vue'),
       },
       {
+        path: '/cw/:id',
+        name: 'cw',
+        component: () => import('@/views/pages/ChargeWithdraw.vue'),
+      },
+      {
         path: '/ticket',
         name: 'ticket',
         component: () => import('@/views/pages/Ticket.vue'),

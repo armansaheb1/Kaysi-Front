@@ -4,6 +4,24 @@
     <CCol>
       <CCard>
         <CCardHeader>
+          موجودی در یک نگاه
+
+        </CCardHeader>
+        <CCardBody>
+          <GChart style="float: left;" type="PieChart" :data="balancees" :options="{
+            title: 'موجودی دلاری',
+            pieHole: 0.6,
+
+            width: width / 2,
+            height: width / 5,
+          }" />
+          <h4 style="float: left; width: 40%">
+            مجموع موجودی دلاری: {{ balances.toFixed(2) }}
+          </h4>
+        </CCardBody>
+      </CCard><br><br>
+      <CCard>
+        <CCardHeader>
           موجودی حساب ها
 
         </CCardHeader>
@@ -12,30 +30,180 @@
             <table style="direction: rtl; " class="table">
               <thead>
                 <tr>
-                  <th class="col-3">ارز</th>
-                  <th class="col-3" style="text-align: center;">موجودی</th>
-                  <th class="col-6 notmob" style="text-align: left;">عملیات</th>
+                  <th class="col-1">ارز</th>
+                  <th class="col-2"></th>
+                  <th class="col-2 notmob" style="text-align: center;">قیمت</th>
+                  <th class="col-2" style="text-align: center;">موجودی</th>
+                  <th class="col-5 notmob" style="text-align: left;">عملیات</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr v-for="item in  wallets " v-bind:key="item">
-                  <td class="col-3" style="text-align: right;height: 60px"><img
+              <tbody class="notmob" v-for="item in  wallets " v-bind:key="item">
+                <tr v-if="parseFloat(item[1])">
+                  <td class="col-1" style="text-align: right;height: 60px"><img
                       style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
                       :src="item[0]">
-                    <h6 style="margin: auto; margin-top: 20px;text-align: center;font-family:'calibri';">{{ item[2] }}
+
+                  </td>
+                  <td>
+                    <h6
+                      style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
+                      {{
+            item[2] }}
+                    </h6><br>
+                    <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">{{
+            item[4] }}
+
                     </h6>
                   </td>
 
-                  <td class="col-3" style="text-align: center;">
-                    <h6 style="margin: auto; margin-top: 20px;text-align: center;font-family:'calibri';">{{ item[1] }}
-                    </h6>
+                  <td class="notmob" style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(10) }}
+                  </td>
 
+                  <td class="col-3" style="text-align: center;">
+                    <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
+                      {{ item[1] }}
+                    </h6>
+                    <h6 style="margin: auto; text-align: center;font-family:'calibri';">
+                      {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(6) }}
+                    </h6>
                     <br>
                   </td>
                   <td class="col-6 notmob" style="text-align: left;">
                     <a style="margin: 5px" :href="`/charge/${item[3]}`" class="btn btn-success"> واریز</a>
                     <a style="margin: 5px" :href="`/withdraw/${item[3]}`" class="btn btn-danger"> برداشت</a>
                   </td>
+                </tr>
+              </tbody>
+              <tbody class="notmob" v-for="item in  wallets " v-bind:key="item">
+                <tr v-if="!parseFloat(item[1])">
+                  <td class="col-1" style="text-align: right;height: 60px"><img
+                      style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
+                      :src="item[0]">
+
+                  </td>
+                  <td>
+                    <h6
+                      style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
+                      {{
+            item[2] }}
+                    </h6><br>
+                    <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">{{
+            item[4] }}
+
+                    </h6>
+                  </td>
+
+                  <td class="notmob" v-if="item[5] < 0.000001" style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(10) }}
+                  </td>
+                  <td class="notmob" v-else-if="item[5] > 100" style="text-align: center;padding-top: 25px">
+                    {{ parseInt(item[5]) }}
+                  </td>
+                  <td class="notmob" v-else style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(6) }}
+                  </td>
+
+
+                  <td class="col-3" style="text-align: center;">
+                    <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
+                      {{ item[1] }}
+                    </h6>
+                    <h6 style="margin: auto; text-align: center;font-family:'calibri';">
+                      {{ parseFloat(item[1]) * parseFloat(item[5]) }}
+                    </h6>
+                    <br>
+                  </td>
+                  <td class="col-6 notmob" style="text-align: left;">
+                    <a style="margin: 5px" :href="`/charge/${item[3]}`" class="btn btn-success"> واریز</a>
+                    <a style="margin: 5px" :href="`/withdraw/${item[3]}`" class="btn btn-danger"> برداشت</a>
+                  </td>
+                </tr>
+              </tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+              <tbody class="mob" v-for="item in  wallets " v-bind:key="item">
+                <tr v-if="parseFloat(item[1])">
+                  <td class="col-1" style="text-align: right;height: 60px">
+                    <a :href="`/cw/${item[3]}`">
+                      <img style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
+                        :src="item[0]">
+                    </a>
+                  </td>
+                  <td>
+                    <a :href="`/cw/${item[3]}`">
+                      <h6
+                        style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
+                        {{
+            item[2] }}
+                      </h6><br>
+                      <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">
+                        {{
+            item[4] }}
+
+                      </h6>
+                    </a>
+                  </td>
+
+                  <td class="col-3" style="text-align: center;">
+                    <a :href="`/cw/${item[3]}`">
+                      <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
+                        {{ item[1] }}
+                      </h6>
+                      <h6 style="margin: auto; text-align: center;font-family:'calibri';">
+                        {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(6) }}
+                      </h6>
+                      <br>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody class="mob" v-for="item in  wallets " v-bind:key="item">
+                <tr v-if="!parseFloat(item[1])">
+                  <td class="col-1" style="text-align: right;height: 60px">
+                    <a :href="`/cw/${item[3]}`">
+                      <img style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
+                        :src="item[0]"></a>
+
+                  </td>
+                  <td>
+                    <a :href="`/cw/${item[3]}`">
+                      <h6
+                        style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
+                        {{
+            item[2] }}
+                      </h6><br>
+                      <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">
+                        {{
+            item[4] }}
+
+                      </h6>
+                    </a>
+                  </td>
+
+
+                  <td class="col-3" style="text-align: center;">
+                    <a :href="`/cw/${item[3]}`">
+                      <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
+                        {{ item[1] }}
+                      </h6>
+                      <h6 style="margin: auto; text-align: center;font-family:'calibri';">
+                        {{ parseFloat(item[1]) * parseFloat(item[5]) }}
+                      </h6>
+                      <br>
+                    </a>
+                  </td>
+
                 </tr>
               </tbody>
             </table>
@@ -50,6 +218,9 @@
 <script>
 import axios from 'axios'
 
+import { GChart } from 'vue-google-charts'
+
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Index',
@@ -59,10 +230,13 @@ export default {
   data: () => ({
     showModal: [],
     user: '',
-    wallets: []
+    wallets: [],
+    balancees: [['ارز', 'موجودی دلاری']],
+    width: 0,
+    balances: 0
   }),
   components: {
-
+    GChart
   },
   mounted() {
     this.get_user()
@@ -73,6 +247,7 @@ export default {
       this.$store.state.showloginindex = true
     },
     async get_user() {
+      this.width = window.innerWidth * .8
       await axios
         .get(`user`)
         .then(response => response.data)
@@ -87,6 +262,14 @@ export default {
         .then(response => {
           console.log(response)
           this.wallets = response
+          this.balances = 0
+          for (var item of response) {
+            if (item[1]) {
+              this.balancees.push([item[2], parseFloat(item[1]) * parseFloat(item[5])])
+              this.balances = this.balances + parseFloat(item[1]) * parseFloat(item[5])
+            }
+
+          }
         })
     }
   }
@@ -95,6 +278,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+a {
+  color: #444
+}
+
+.btn {
+  color: white !important
+}
+
 .bannerbg-dark {
   background-color: #0B0E11;
   color: white
@@ -146,6 +337,10 @@ li {
   margin: 3%
 }
 
+.mob {
+  display: none;
+}
+
 @media only screen and (max-width: 700px) {
   .wals {
     width: 44%;
@@ -168,6 +363,10 @@ li {
 
   .notmob {
     display: none;
+  }
+
+  .mob {
+    display: block;
   }
 }
 
