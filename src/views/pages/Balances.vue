@@ -31,7 +31,7 @@
               <thead>
                 <tr>
                   <th class="col-1">ارز</th>
-                  <th class="col-2"></th>
+                  <th class="col-2 notmob"></th>
                   <th class="col-2 notmob" style="text-align: center;">قیمت</th>
                   <th class="col-2" style="text-align: center;">موجودی</th>
                   <th class="col-5 notmob" style="text-align: left;">عملیات</th>
