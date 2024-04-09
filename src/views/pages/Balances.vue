@@ -28,16 +28,24 @@
         <div class="autoplay" style="width: 90%;margin: auto;height:auto;overflow-y:hidden">
           <div>
             <table style="direction: rtl; " class="table">
-              <thead>
+              <thead v-if="!mob">
                 <tr>
                   <th class="col-1">ارز</th>
-                  <th class="col-2 notmob"></th>
-                  <th class="col-2 notmob" style="text-align: center;">قیمت</th>
+                  <th class="col-2"></th>
+                  <th class="col-2" style="text-align: center;">قیمت</th>
                   <th class="col-2" style="text-align: center;">موجودی</th>
-                  <th class="col-5 notmob" style="text-align: left;">عملیات</th>
+                  <th class="col-5" style="text-align: left;">عملیات</th>
                 </tr>
               </thead>
-              <tbody class="notmob" v-for="item in  wallets " v-bind:key="item">
+              <thead v-else>
+
+                <tr>
+                  <th style="width: 25%">ارز</th>
+                  <th style="width: 25%"></th>
+                  <th style="width: 50%; text-align: center;">موجودی</th>
+                </tr>
+              </thead>
+              <tbody v-if="!mob" v-for="item in wallets " v-bind:key="item">
                 <tr v-if="parseFloat(item[1])">
                   <td class="col-1" style="text-align: right;height: 60px"><img
                       style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
@@ -48,10 +56,10 @@
                     <h6
                       style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
                       {{
-            item[2] }}
+                        item[2] }}
                     </h6><br>
                     <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">{{
-            item[4] }}
+                      item[4] }}
 
                     </h6>
                   </td>
@@ -75,7 +83,7 @@
                   </td>
                 </tr>
               </tbody>
-              <tbody class="notmob" v-for="item in  wallets " v-bind:key="item">
+              <tbody v-if="!mob" v-for="item in wallets " v-bind:key="item">
                 <tr v-if="!parseFloat(item[1])">
                   <td class="col-1" style="text-align: right;height: 60px"><img
                       style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
@@ -86,10 +94,10 @@
                     <h6
                       style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
                       {{
-            item[2] }}
+                        item[2] }}
                     </h6><br>
                     <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">{{
-            item[4] }}
+                      item[4] }}
 
                     </h6>
                   </td>
@@ -132,30 +140,30 @@
 
 
 
-              <tbody class="mob" v-for="item in  wallets " v-bind:key="item">
+              <tbody v-if="mob" v-for="item in wallets " v-bind:key="item">
                 <tr v-if="parseFloat(item[1])">
-                  <td class="col-1" style="text-align: right;height: 60px">
+                  <td style="text-align: right;height: 60px; width: 25%">
                     <a :href="`/cw/${item[3]}`">
                       <img style="position:relative;height: 100%; float:right; aspect-ratio:1/1; margin-top: 5%"
                         :src="item[0]">
                     </a>
                   </td>
-                  <td>
+                  <td class="col-2" style="width: 25%">
                     <a :href="`/cw/${item[3]}`">
                       <h6
                         style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
                         {{
-            item[2] }}
+                          item[2] }}
                       </h6><br>
                       <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">
                         {{
-            item[4] }}
+                          item[4] }}
 
                       </h6>
                     </a>
                   </td>
 
-                  <td class="col-3" style="text-align: center;">
+                  <td v-if="mob" style="text-align: center; width: 50%">
                     <a :href="`/cw/${item[3]}`">
                       <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
                         {{ item[1] }}
@@ -168,7 +176,7 @@
                   </td>
                 </tr>
               </tbody>
-              <tbody class="mob" v-for="item in  wallets " v-bind:key="item">
+              <tbody v-if="mob" v-for="item in wallets " v-bind:key="item">
                 <tr v-if="!parseFloat(item[1])">
                   <td class="col-1" style="text-align: right;height: 60px">
                     <a :href="`/cw/${item[3]}`">
@@ -176,23 +184,23 @@
                         :src="item[0]"></a>
 
                   </td>
-                  <td>
+                  <td class="col-2s">
                     <a :href="`/cw/${item[3]}`">
                       <h6
                         style="width: 100%;float:right;margin: auto; text-align: right;font-family:'arial';margin-top: 5px">
                         {{
-            item[2] }}
+                          item[2] }}
                       </h6><br>
                       <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">
                         {{
-            item[4] }}
+                          item[4] }}
 
                       </h6>
                     </a>
                   </td>
 
 
-                  <td class="col-3" style="text-align: center;">
+                  <td class="col-2" style="text-align: center;">
                     <a :href="`/cw/${item[3]}`">
                       <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
                         {{ item[1] }}
@@ -233,7 +241,8 @@ export default {
     wallets: [],
     balancees: [['ارز', 'موجودی دلاری']],
     width: 0,
-    balances: 0
+    balances: 0,
+    mob: false
   }),
   components: {
     GChart
@@ -247,7 +256,12 @@ export default {
       this.$store.state.showloginindex = true
     },
     async get_user() {
-      this.width = window.innerWidth * .8
+      this.width = window.innerWidth
+      if (window.innerWidth < 1024) {
+        this.mob = true
+      } else {
+        this.mob = false
+      }
       await axios
         .get(`user`)
         .then(response => response.data)
