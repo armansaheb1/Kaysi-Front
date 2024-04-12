@@ -2,14 +2,14 @@
 <template>
   <CRow>
     <CCol>
-      <div v-for="item in  currency " v-bind:key="item">
+      <div v-for="item in currency " v-bind:key="item">
         <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
           :src="item.get_image">
       </div><br><br><br><br>
 
 
       <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
-        <div v-for="item in  currency " v-bind:key="item" class="card">
+        <div v-for="item in currency " v-bind:key="item" class="card">
           <CCardHeader style="text-align: center;">
             <h4>واریز</h4>
           </CCardHeader>
@@ -24,9 +24,9 @@
               style="border-radius: 5px 5px 0 0;">
             <button class="btn btn-warning"
               style="width: 100%; margin: auto;border-radius:  0 0 5px 5px; font-family: 'Yekan'!important;">کپی</button><br>
-            <form action="admindecrease" method="POST">
-              <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-              <input class="form-control" type="text" name="" id="" placeholder="کد یا لینک پیگیری"><br>
+            <form @submit.prevent="submitcharge()" method="POST">
+              <input class="form-control" v-model="amount" type="text" name="" id="" placeholder="مبلغ"><br>
+              <input class="form-control" v-model="link" type="text" name="" id="" placeholder="کد یا لینک پیگیری"><br>
               <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
                 ثبت
                 واریز</button><br><br>
@@ -44,20 +44,20 @@
     <CCol>
       <CCardBody>
         <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
-          <div v-for="item in  currency2 " v-bind:key="item" class="card wals" style="">
+          <div v-for="item in currency2 " v-bind:key="item" class="card wals" style="">
             <div class="card-header" style="text-align: center;">
               <h4>برداشت</h4>
             </div>
             <div class=" card-body">
 
 
-              <form action="admindecrease" method="POST">
+              <form @submit.prevent="submitwith()">
                 <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
-                <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-                <input class="form-control" type="text" name="" id="" placeholder="آدرس ولت"><br>
+                <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
+                <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
                 <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
                   ثبت
-                  واریز</button>
+                  برداشت</button>
 
 
               </form>
@@ -84,7 +84,11 @@ export default {
     showModal: [],
     user: '',
     currency: [],
-    currency2: []
+    currency2: [],
+    link: '',
+    amount: '',
+    amount2: '',
+    link2: '',
   }),
   mounted() {
     this.get_user()
@@ -122,6 +126,26 @@ export default {
         .then(response => {
           console.log(response)
           this.currency2 = response
+        })
+    },
+    async submitcharge() {
+      var id = this.$route.params.id
+      await axios
+        .post(`addamountreq`, { cur: id, link: this.link, amount: this.amount })
+        .then(response => response.data)
+        .then(() => {
+          const toPath = this.$route.go || '/balances'
+          this.$router.push(toPath)
+        })
+    },
+    async submitwith() {
+      var id = this.$route.params.id
+      await axios
+        .post(`askamountreq`, { cur: id, link: this.link2, amount: this.amount2 })
+        .then(response => response.data)
+        .then(() => {
+          const toPath = this.$route.go || '/balances'
+          this.$router.push(toPath)
         })
     }
   }

@@ -1,19 +1,21 @@
+<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <CRow>
     <CCol>
-      <CCard>
+      <CCard v-if="balances > 0">
         <CCardHeader>
           موجودی در یک نگاه
 
         </CCardHeader>
-        <CCardBody>
+        <CCardBody style="background-color: rgba(255,255,255,0.15);">
           <GChart style="float: left;" type="PieChart" :data="balancees" :options="{
             title: 'موجودی دلاری',
-            pieHole: 0.6,
-
-            width: width / 2,
-            height: width / 5,
+            pieHole: 0.3,
+            width: width * .85,
+            height: width / 4,
+            textStyle: { color: '#FFF' },
+            backgroundColor: 'transparent',
           }" />
           <h4 style="float: left; width: 40%">
             مجموع موجودی دلاری: {{ balances.toFixed(2) }}
@@ -58,19 +60,34 @@
                       {{
                         item[2] }}
                     </h6><br>
-                    <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">{{
+                    <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ">{{
                       item[4] }}
 
                     </h6>
                   </td>
 
-                  <td class="notmob" style="text-align: center;padding-top: 25px">
+                  <td class="notmob" v-if="item[5].toFixed(10) < 0.000001" style="text-align: center;padding-top: 25px">
                     {{ item[5].toFixed(10) }}
                   </td>
+                  <td class="notmob" v-else-if="item[5] > 100" style="text-align: center;padding-top: 25px">
+                    {{ parseInt(item[5]) }}
+                  </td>
+                  <td class="notmob" v-else style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(6) }}
+                  </td>
+
+
 
                   <td class="col-3" style="text-align: center;">
-                    <h6 style="margin: auto; margin-top: 5px;text-align: center;font-family:'calibri';">
-                      {{ item[1] }}
+                    <h6 class="notmob" v-if="item[1].toFixed(10) < 0.0000001"
+                      style="text-align: center;padding-top: 25px">
+                      {{ item[1].toFixed(10) }}
+                    </h6>
+                    <h6 class="notmob" v-else-if="item[1] > 100" style="text-align: center;padding-top: 25px">
+                      {{ parseInt(item[1]) }}
+                    </h6>
+                    <h6 class="notmob" v-else style="text-align: center;padding-top: 25px">
+                      {{ item[1].toFixed(6) }}
                     </h6>
                     <h6 style="margin: auto; text-align: center;font-family:'calibri';">
                       {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(6) }}
@@ -96,7 +113,7 @@
                       {{
                         item[2] }}
                     </h6><br>
-                    <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">{{
+                    <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ">{{
                       item[4] }}
 
                     </h6>
@@ -155,7 +172,7 @@
                         {{
                           item[2] }}
                       </h6><br>
-                      <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">
+                      <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ">
                         {{
                           item[4] }}
 
@@ -191,7 +208,7 @@
                         {{
                           item[2] }}
                       </h6><br>
-                      <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ; color: grey">
+                      <h6 style="font-size: 14px;width: 100%;float:right;margin: auto; text-align: right ">
                         {{
                           item[4] }}
 
@@ -293,7 +310,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 a {
-  color: #444
+  color: var(--cui-card-cap-color)
 }
 
 .btn {

@@ -1,21 +1,23 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <CRow>
-    <CCol>
+    <CCol v-for="item in currency " v-bind:key="item">
+      <img style="position:relative;width: 16%; margin: 5% 42%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
+        :src="item.get_image"><br>
       <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
-        <div v-for="item in  currency " v-bind:key="item" class="card wals" style="padding: 0 5%;">
-          <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
-            :src="item.get_image">
+        <div class="card wals" style="padding: 0 5%;">
+          <br>
 
           <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
             :src="item.get_qr">
+          <br>
           <input type="text" name="" id="" class="form-control" :value="item.address"
             style="border-radius: 5px 5px 0 0;">
           <button class="btn btn-warning"
             style="width: 100%; margin: auto;border-radius:  0 0 5px 5px; font-family: 'Yekan'!important;">کپی</button><br>
-          <form action="admindecrease" method="POST">
-            <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-            <input class="form-control" type="text" name="" id="" placeholder="کد یا لینک پیگیری"><br>
+          <form @submit.prevent="submitcharge()" method="POST">
+            <input class="form-control" v-model="amount" type="text" name="" id="" placeholder="مبلغ"><br>
+            <input class="form-control" v-model="link" type="text" name="" id="" placeholder="کد یا لینک پیگیری"><br>
             <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
               ثبت
               واریز</button><br><br>
@@ -69,6 +71,16 @@ export default {
         .then(response => {
           console.log(response)
           this.currency = [response]
+        })
+    },
+    async submitcharge() {
+      var id = this.$route.params.id
+      await axios
+        .post(`addamountreq`, { cur: id, link: this.link, amount: this.amount })
+        .then(response => response.data)
+        .then(() => {
+          const toPath = this.$route.go || '/balances'
+          this.$router.push(toPath)
         })
     }
   }

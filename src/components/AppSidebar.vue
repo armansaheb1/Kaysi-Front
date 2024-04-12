@@ -1,15 +1,15 @@
 <template>
   <CSidebar class="border-end" colorScheme="dark" position="fixed" :unfoldable="sidebarUnfoldable"
     :visible="sidebarVisible" @visible-change="(event) =>
-    $store.commit({
-      type: 'updateSidebarVisible',
-      value: event,
-    })
-    ">
+      $store.commit({
+        type: 'updateSidebarVisible',
+        value: event,
+      })
+      ">
     <CSidebarHeader class="border-bottom">
       <RouterLink custom to="/" v-slot="{ href, navigate }">
         <CSidebarBrand style="margin: auto" v-bind="$attrs" as="a" :href="href" @click="navigate">
-          <img src="/logo.png" style="height: 55px;width: 55px; margin: -10px auto; display: block;border-radius: 50%;"
+          <img src="/logo.png" style="height: 53px;width: 53px; margin: -10px auto; display: block;border-radius: 50%;"
             alt="">
         </CSidebarBrand>
       </RouterLink>

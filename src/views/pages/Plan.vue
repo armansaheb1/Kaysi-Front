@@ -11,24 +11,28 @@
           <img v-if="pic" :src="pic" alt="" style="width: 16%; margin: 0 42%;">
           <br>
           <br>
-          <label for="">نوع ارز</label>
-          <select @change="get_plans(currency)" v-model="currency" class="form-control">
-            <option v-for="item in currencies" v-bind:key="item" :value="item.id">
-              {{ item.name }}
-            </option>
-          </select>
-          <br>
-          <label for="">پلن</label>
-          <select v-if="currency" v-model="plan" class="form-control">
-            <option v-for="item in plans" v-bind:key="item" :value="item.id">
-              {{ item.title }}
-            </option>
-          </select><br>
-          <label for="">مبلغ</label>
-          <input class="form-control" type="text" name="" id=""><br><br>
-
-          <button class="btn btn-success"> خرید</button>
-
+          <form @submit.prevent="submit()">
+            <label for="">نوع ارز</label>
+            <select @change="get_plans(currency)" v-model="currency" class="form-control">
+              <option v-for="item in currencies" v-bind:key="item" :value="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+            <br>
+            <label for="">پلن</label>
+            <select v-if="currency" v-model="plan" class="form-control">
+              <option v-for="item in plans" v-bind:key="item" :value="item.id">
+                {{ item.title }}
+              </option>
+            </select><br>
+            <label for="">مبلغ</label>
+            <input class="form-control" v-model="amount" type="text" name="" id=""><br><br>
+            <input v-model="option" type="radio" style="width: 30px;" name="option" value="add" id="months" required>
+            <label for="months">اضافه شدن سود به پلن</label><br>
+            <input v-model="option" type="radio" style="width: 30px;" name="option" value="wal" id="days" required>
+            <label for="days">اضافه شدن سود به کیف پول</label><br><br>
+            <button class="btn btn-success"> خرید</button>
+          </form>
         </CCardBody>
       </CCard><br>
 
@@ -39,6 +43,7 @@
 <script>
 
 import axios from 'axios'
+import moment from "moment-jalaali";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -52,7 +57,9 @@ export default {
     currency: '',
     plans: [],
     plan: '',
-    pic: ''
+    pic: '',
+    amount: '',
+    option: 'add'
   }),
   components: {
   },
@@ -60,6 +67,9 @@ export default {
     this.get_currencies()
   },
   methods: {
+    tojala(date) {
+      return moment(new Date(date)).format('jYYYY/jM/jD HH:mm:ss')
+    },
     login() {
       this.$store.state.showloginindex = true
     },
@@ -90,6 +100,15 @@ export default {
         .then(response => {
           this.plans = response
           this.get_image(this.currency)
+        })
+    },
+    async submit() {
+      await axios
+        .post(`buyplan`, { plan: this.plan, amount: this.amount, option: this.option })
+        .then(response => response.data)
+        .then(() => {
+          const toPath = this.$route.go || '/plans'
+          this.$router.push(toPath)
         })
     },
   }

@@ -4,7 +4,7 @@
     <CCol>
       <CCardBody>
         <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
-          <div v-for="item in  currency " v-bind:key="item" class="card wals" style="">
+          <div v-for="item in currency " v-bind:key="item" class="card wals" style="">
             <div class="card-header"><img
                 style="position:relative;width: 26%; margin: 0 37%; margin-top: 0px;float:none; aspect-ratio: 1/1"
                 :src="item[0]">
@@ -12,13 +12,13 @@
             <div class=" card-body">
 
 
-              <form action="admindecrease" method="POST">
+              <form @submit.prevent="submitwith()">
                 <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
-                <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-                <input class="form-control" type="text" name="" id="" placeholder="آدرس ولت"><br>
+                <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
+                <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
                 <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
                   ثبت
-                  واریز</button>
+                  برداشت</button>
 
 
               </form>
@@ -72,6 +72,16 @@ export default {
         .then(response => {
           console.log(response)
           this.currency = response
+        })
+    },
+    async submitwith() {
+      var id = this.$route.params.id
+      await axios
+        .post(`askamountreq`, { cur: id, link: this.link2, amount: this.amount2 })
+        .then(response => response.data)
+        .then(() => {
+          const toPath = this.$route.go || '/balances'
+          this.$router.push(toPath)
         })
     }
   }

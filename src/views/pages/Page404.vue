@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
     <CContainer>
@@ -25,6 +26,7 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Page404',
 }
 </script>

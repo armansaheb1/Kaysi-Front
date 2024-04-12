@@ -45,7 +45,7 @@
                 میزان سود ماهیانه : {{ item.profit }}<a style="font: 10px arial;margin-left: 5px;">{{ item.get_cur
                   }}</a>
               </p>
-              <button class="btn btn-primary form-control">اجاره کنید</button>
+              <button @click="rent(item.id)" class="btn btn-primary form-control">اجاره کنید</button>
               <br><br>
             </CCardFooter>
           </CCard>
@@ -60,6 +60,7 @@
 <script>
 
 import axios from 'axios'
+
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -103,6 +104,19 @@ export default {
           this.curs = response
           this.cur = response[0]
           this.get_miners()
+        })
+    },
+    async rent(id) {
+      await axios
+        .post(`rentminer`, { miner: id })
+        .then(response => response.data)
+        .then(() => {
+          const toPath = this.$route.go || '/miners'
+          this.$router.push(toPath)
+        }).catch(data => {
+          console.log(data)
+          this.$swal.fire('', data.response.data, "error");
+          this.merrors = data.response.data
         })
     },
     filter() {

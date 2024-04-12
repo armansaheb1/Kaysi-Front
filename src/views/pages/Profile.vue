@@ -26,11 +26,11 @@
       <CCard>
         <CCardBody>
           <div class="autoplay">
-            کلمه عبور قبلی <input class="form-control" type="password" name="opassword">
-            کلمه عبور جدید <input class="form-control" type="password" name="password">
-            تکرار کلمه عبور <input class="form-control" type="password" name="repassword">
+            کلمه عبور قبلی <input class="form-control" type="password" v-model="opassword">
+            کلمه عبور جدید <input class="form-control" type="password" v-model="password">
+            تکرار کلمه عبور <input class="form-control" type="password" v-model="repassword">
             <br>
-            <a class="btn btn-success">تغییر رمز</a>
+            <a @click="submit()" class="btn btn-success">تغییر رمز</a>
 
           </div>
         </CCardBody>
@@ -50,7 +50,10 @@ export default {
   },
   data: () => ({
     showModal: [],
-    user: ''
+    user: '',
+    password: '',
+    opassword: '',
+    repassword: ''
   }),
   mounted() {
     this.get_user()
@@ -62,6 +65,18 @@ export default {
     async get_user() {
       await axios
         .get(`user`)
+        .then(response => response.data)
+        .then(response => {
+          this.user = response
+        })
+    },
+    async submit() {
+      await axios
+        .post(`changepass`, {
+          password: this.password,
+          opassword: this.opassword,
+          repassword: this.repassword
+        })
         .then(response => response.data)
         .then(response => {
           this.user = response

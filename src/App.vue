@@ -78,6 +78,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~@marcoschulte/vue3-progress/dist/";
+
 * {
   font-family: 'Yekan'
 }
