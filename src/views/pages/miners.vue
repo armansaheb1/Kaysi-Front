@@ -186,6 +186,9 @@ export default {
         .then(response => response.data)
         .then(response => {
           this.plans = response
+          setTimeout(() => {
+            this.get_plans()
+          }, 30000);
         })
     },
     async close(id = null) {
