@@ -42,29 +42,27 @@
   <br>
   <CRow>
     <CCol>
-      <CCardBody>
-        <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
-          <div v-for="item in currency2 " v-bind:key="item" class="card wals" style="">
-            <div class="card-header" style="text-align: center;">
-              <h4>برداشت</h4>
-            </div>
-            <div class=" card-body">
+      <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
+        <div v-for="item in currency2 " v-bind:key="item" class="card" style="">
+          <div class="card-header" style="text-align: center;">
+            <h4>برداشت</h4>
+          </div>
+          <div class=" card-body">
 
 
-              <form @submit.prevent="submitwith()">
-                <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
-                <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
-                <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
-                <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
-                  ثبت
-                  برداشت</button>
+            <form @submit.prevent="submitwith()">
+              <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
+              <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
+              <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
+              <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
+                ثبت
+                برداشت</button>
 
 
-              </form>
-            </div>
+            </form>
           </div>
         </div>
-      </CCardBody>
+      </div>
 
     </CCol>
   </CRow>

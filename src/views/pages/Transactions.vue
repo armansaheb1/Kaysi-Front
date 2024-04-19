@@ -8,7 +8,7 @@
 
         </CCardHeader>
         <CCardBody>
-          <table class="table" style="margin: 0">
+          <table class="table" style="margin: 0; text-align: center;">
             <thead>
               <tr>
                 <th scope="col">نوع ارز</th>
@@ -19,10 +19,10 @@
             </thead>
             <tbody>
               <tr v-for="item in transactions" v-bind:key="item">
-                <th scope="col">{{ item[0] }}</th>
+                <th scope="col"><img :src="item[0]" style="height: 40px;" alt=""></th>
                 <th scope="col">{{ item[1] }}</th>
                 <th scope="col">{{ item[2] }}</th>
-                <th scope="col">{{ item[3] }} </th>
+                <th scope="col" :style="`color: ${item[4]}`">{{ item[3] }} </th>
               </tr>
             </tbody>
           </table>

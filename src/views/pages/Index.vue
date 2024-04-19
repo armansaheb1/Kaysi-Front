@@ -38,60 +38,19 @@
       <br>
 
       <div style="padding: 5%">
-        <div style="" class=" card third">
-          <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt="">
+        <div v-for="item in stickers" v-bind:key="item" style="height: 500px;" class=" card third">
+          <div class="card-header"><img :src="item.get_image" style="width: 60%; margin: auto" alt="">
           </div>
           <div class="card-body" style="text-align: justify; direction: rtl;">
-            <h3>
-              کی سی چیست ؟
-            </h3>
+            <h5>
+              {{ item.title }} </h5>
             <hr>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
+            <p style="font-size: 15px;">
+              {{ item.text }}
             </p>
           </div>
         </div>
-        <div style="" class="card third">
-          <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt="">
-          </div>
-          <div class="card-body" style="text-align: justify; direction: rtl;">
-            <h3>
-              کی سی چیست ؟
-            </h3>
-            <hr>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
-            </p>
-          </div>
-        </div>
-        <div style="" class="card third">
-          <div class="card-header"><img src="/logo.png" style="border-radius: 50%;width: 60%; margin: auto" alt="">
-          </div>
-          <div class="card-body" style="text-align: justify; direction: rtl;">
-            <h3>
-              کی سی چیست ؟
-            </h3>
-            <hr>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
-            </p>
-          </div>
-        </div>
+
       </div>
     </div>
     <div style="clear: both;"></div>
@@ -104,9 +63,28 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Register',
+  methods: {
+    async get_stickers() {
+      await axios
+        .get(`posts`)
+        .then(response => response.data)
+        .then(response => {
+          this.stickers = response
+        })
+    },
+  },
+  mounted() {
+    this.get_stickers()
+  },
+  data() {
+    return {
+      stickers: []
+    }
+  }
 }
 </script>
 

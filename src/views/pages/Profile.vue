@@ -16,7 +16,7 @@
 
 
 
-            <div class="title" style="width:90%;margin:auto;margin-top:30px;text-align:center"> تغییر کلمه عبور </div>
+
 
 
 
@@ -24,7 +24,11 @@
         </CCardBody>
       </CCard><br>
       <CCard>
+        <CCardHeader>
+          تغییر کلمه عبور
+        </CCardHeader>
         <CCardBody>
+
           <div class="autoplay">
             کلمه عبور قبلی <input class="form-control" type="password" v-model="opassword">
             کلمه عبور جدید <input class="form-control" type="password" v-model="password">

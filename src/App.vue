@@ -19,6 +19,8 @@
     <register />
   </vue-final-modal>
 
+  <chat />
+
 </template>
 <script>
 import axios from 'axios'
@@ -29,7 +31,7 @@ import login from './views/pages/Login.vue'
 import loginmini from './views/pages/Loginmini.vue'
 import register from './views/pages/Register.vue'
 import { VueFinalModal } from 'vue-final-modal'
-
+import chat from './views/pages/components/Chat.vue';
 
 export default {
   setup() {
@@ -72,7 +74,8 @@ export default {
     login,
     VueFinalModal,
     register,
-    loginmini
+    loginmini,
+    chat
   }
 }
 </script>
@@ -90,6 +93,51 @@ export default {
 
 .card-body {
   direction: rtl
+}
+
+.arscard {
+  background-color: #ffff;
+}
+
+.chat-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 80px;
+  height: 80px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.chat-box {
+  position: fixed;
+  right: 1%;
+  bottom: 3%;
+  width: 25%;
+  border-radius: 5%;
+  z-index: 1;
+}
+
+.chat-btn:hover {
+  cursor: pointer;
+}
+
+.container {
+  position: relative;
+  z-index: 1000;
+  width: 40% !important;
+  right: 5px;
+  z-index: 100000;
+}
+
+@media only screen and (max-width: 700px) {
+  .container {
+    position: relative;
+    z-index: 1000;
+    width: 100% !important;
+    height: 100% !important;
+    right: 5px;
+  }
 }
 
 // Import Main styles for this application

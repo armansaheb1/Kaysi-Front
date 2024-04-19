@@ -15,6 +15,7 @@
                 <th>ماینر</th>
                 <th>مبلغ</th>
                 <th>زمان ثبت</th>
+                <th>زمان پایان</th>
                 <th>دوره سود</th>
                 <th>پلن</th>
                 <th>درصد سود</th>
@@ -34,7 +35,11 @@
 
                 </td>
                 <td style="height: 60px">
-                  {{ item.start_date }}
+                  {{ tojala(item.start_date) }}
+
+                </td>
+                <td style="height: 60px">
+                  {{ tojala(new Date().setDate(new Date(item.start_date).getDate() + 30)) }}
 
                 </td>
                 <td>
@@ -92,6 +97,12 @@
                       <td class="col-6" style="width: 50%;text-align: right;">زمان شروع</td>
                       <td class="col-6" style="width: 50%;text-align: left;">{{
                         tojala(item.start_date) }}</td>
+                    </tr>
+
+                    <tr>
+                      <td class="col-6" style="width: 50%;text-align: right;">زمان پایان</td>
+                      <td class="col-6" style="width: 50%;text-align: left;">{{ tojala(new Date().setDate(new
+                        Date(item.start_date).getDate() + 30)) }}</td>
                     </tr>
 
                     <tr>
@@ -276,6 +287,7 @@ a {
 }
 
 .p-progressbar .p-progressbar-label {
-  color: black !important
+  color: black !important;
+  text-align: center
 }
 </style>
