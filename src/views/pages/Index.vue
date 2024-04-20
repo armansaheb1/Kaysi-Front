@@ -22,9 +22,14 @@
 
 
 
-          <li style="" class="lil"><a style="font-size: 12px!important; color: whitesmoke; text-decoration: none;"
-              class="btn btn-success" @click="$store.state.loginpopmini = true">ورود /
+          <li v-if="!$store.state.isAuthenticated" style="" class="lil"><a
+              style="font-size: 12px!important; color: whitesmoke; text-decoration: none;" class="btn btn-success"
+              @click="$store.state.loginpopmini = true">ورود /
               ثبت نام</a>
+          </li>
+          <li v-else style="" class="lil"><a
+              style="font-size: 12px!important; color: whitesmoke; text-decoration: none;" class="btn btn-success"
+              href="/dashboard">داشبورد</a>
           </li>
         </ul>
       </nav>
@@ -56,6 +61,39 @@
     <div style="clear: both;"></div>
     <div style="height: 100px">
 
+      <div style="position: relative ;padding: 2%">
+        <h3 style="width: 100%; text-align: right; padding: 2%">
+          اخبار ارز دیجیتال </h3>
+        <br>
+
+        <div style="padding: 5%; padding-top: 0;">
+          <div v-for="item in news" v-bind:key="item" class="second" style="margin : 3%; border-radius : 2%;">
+            <a :href="`/news/${item.id}`" style="color: #444">
+              <div style="width: 35%; float: right!important;">
+                <img :src="item.get_image" style="width: 100%; margin: auto" alt="">
+              </div>
+              <div style="text-align: justify; direction: rtl;width: 65%; float: left; padding-right: 3%;">
+                <h6 style="font-weight: bold;">
+                  {{ item.title }} </h6>
+                <hr>
+                <p class="mob" style="font-size: 14px;margin-top: -5px;">
+                  {{ item.text.slice(0, 90) + '...' }}
+                </p>
+                <p class="nmob" style="font-size: 14px;margin-top: -5px;">
+                  {{ item.text.slice(0, 250) + '...' }}
+                </p>
+              </div>
+              <div style="clear: both"></div>
+            </a>
+          </div>
+
+        </div>
+        <div style="clear: both;"></div>
+
+      </div>
+      <div style="width: 100%; height: 65px; background-color: #444; text-align: center;padding: 20px; color: white;">
+        KC شرکت سرمایه گذاری
+      </div>
     </div>
 
   </div>
@@ -76,13 +114,23 @@ export default {
           this.stickers = response
         })
     },
+    async get_news() {
+      await axios
+        .get(`news`)
+        .then(response => response.data)
+        .then(response => {
+          this.news = response
+        })
+    },
   },
   mounted() {
     this.get_stickers()
+    this.get_news()
   },
   data() {
     return {
-      stickers: []
+      stickers: [],
+      news: []
     }
   }
 }
@@ -116,7 +164,27 @@ export default {
   text-align: center
 }
 
+.mob {
+  display: none;
+}
+
+.nmob {
+  display: block;
+}
+
+.second {
+  width: 43%;
+  margin: .5%;
+  float: right;
+}
+
 @media only screen and (max-width: 1023px) {
+
+  .second {
+    width: 93%;
+    margin: .5%;
+    float: right;
+  }
 
   .lil a {
     font-size: 14px;
@@ -143,6 +211,14 @@ export default {
 }
 
 @media only screen and (max-width: 767px) {
+  .mob {
+    display: block;
+  }
+
+  .nmob {
+    display: none;
+  }
+
   .wals {
     width: 94%;
     float: left;
