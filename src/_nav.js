@@ -98,19 +98,19 @@ export default [
       },
     ],
   },
-/*  {
-    component: 'CNavItem',
-    name: 'شارژ حساب',
-    to: '/charge',
-    icon: 'cil-chart-pie',
-  },
-  {
-    component: 'CNavItem',
-    name: 'برداشت',
-    to: '/withdraw',
-    icon: 'cil-chart-pie',
-  },
-*/
+  /*  {
+      component: 'CNavItem',
+      name: 'شارژ حساب',
+      to: '/charge',
+      icon: 'cil-chart-pie',
+    },
+    {
+      component: 'CNavItem',
+      name: 'برداشت',
+      to: '/withdraw',
+      icon: 'cil-chart-pie',
+    },
+  */
   {
     component: 'CNavItem',
     name: 'تیکت',

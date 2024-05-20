@@ -1,12 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable no-unused-vars -->
 <template>
+
   <div class="container"
     style="background:none;width:100%; padding:0 ; border-radius:15%; margin:0!important; position: fixed;bottom: 0;">
     <div style="margin:0; width:100%; height: 100%;">
-
-      <div v-if="!hide2 && hide" id="chat-container" style="height:100% ;  border-radius:30px ; background:none"
-        class="card">
+      <div v-if="!hide2" id="chat-container" style="height:100% ;  border-radius:30px ; background:none" class="card">
 
         <div class="card-header text-white text-center"
           style="height:60px ; background:#2f3237 ; border-radius: 15px 15px 0 0 ">
@@ -20,101 +19,111 @@
         <div class="card-body" style="height:320px; overflow:auto">
           <div class=" chat-body" style="width:100%;height:300px;">
             <div class="chat-section">
-              <template>
-
-                <div class="card-footer text-muted" style="z-index:1;width:100%;padding:0; border-style:none"
-                  id="emailadd">
-                  <br>
-                  <form @submit.prevent="startChatSession">
-                    <div>
-                      <div class="col-12">
-                        <input v-model="emailadd" required type="text" placeholder="آدرس ایمیل" />
-                      </div><br>
-                      <div class="col-12">
-                        <button class="btn btn-dark" style="width:100%">شروع چت</button>
-                      </div>
+              <div class="card-footer text-muted" style="z-index:1;width:100%;padding:0; border-style:none"
+                id="emailadd">
+                <br>
+                <form @submit.prevent="get_user()">
+                  <div>
+                    <div class="col-12">
+                      <input v-model="fullname" required type="text" placeholder="نام کامل" />
+                    </div><br>
+                    <div class="col-12">
+                      <input v-model="mobile" required type="text" placeholder="موبایل" />
+                    </div><br>
+                    <div class="col-12">
+                      <button class="btn btn-dark" style="width:100%">شروع چت</button>
                     </div>
-                  </form>
-                </div><br><br>
-                <div style="clear:both"></div>
-              </template>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="!hide" id="chat-container" style="height:100% ;  border-radius:30px ; background:none" class="card">
-
-        <div class="card-header text-white text-center"
-          style="height:60px ; background:#2f3237 ; border-radius: 15px 15px 0 0 ">
-          پشتیبانی آنلاین<br>
-          <button class="btn btn-secondary"
-            style="position:absolute;top:5px;right:5px;padding:0 7px;border-radius:50%!important ; width:25px!important; height:25px"
-            @click="hide = true">-</button>
-        </div>
-
-
-        <div class="card-body" style="height:320px; overflow:auto">
-          <div class=" chat-body" style="width:100%;height:300px;">
-            <div v-for="message in messages" :key="message.id" class="chat-section">
-              <template v-if="!message.admin">
-                <div style="max-width:85%;min-width:60% ; float:right ;">
-                  <span style="width:100% ; background:grey ; padding:5%"
-                    class="card-text speech-bubble  float-right text-white subtle-blue-gradient">
-                    <span v-if="typeof (message.user) === 'string'"
-                      style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.user }} <br></span>
-                    <span v-else style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.user.username }}
-                      <br></span><br>
-                    {{ message.message }}
-                  </span>
-                </div><br><br>
-                <div style="clear:both"></div>
-              </template>
-              <template v-else>
-
-                <div style=" float:right">
-                  <span style="max-width:85% ;min-width:60% ;  float:left  ; padding:5%"
-                    class="card-text speech-bubble ">
-                    <span v-if="typeof (message.user) === 'string'"
-                      style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.user }} <br></span>
-                    <span v-else style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.user.username }}
-                      <br></span><br>
-                    {{ message.message }}
-                  </span>
-                </div><br><br>
-                <div style="clear:both"></div>
-              </template>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-footer text-muted" style="z-index:1 ; background: #2f3237">
-          <form @submit.prevent="postMessage">
-            <div>
-              <div class="col-sm-12">
-                <input class="inn" style="font-family:'yekan'; border-style:none" required v-model="message" type="text"
-                  placeholder="متن پیام ..." />
+                  </div>
+                </form>
               </div><br><br>
-              <div class="col-sm-12">
-                <button class="btn btn-secondary" style="width:100% ; font-family: 'yekan'">ارسال پیام</button>
-              </div>
+              <div style="clear:both"></div>
             </div>
-          </form>
-        </div>
-      </div>
-
-
-
-      <div v-else>
-        <div v-if="email | hide2" class="chat-btn"
-          style="background:#f5f5ff;border-radius:50%; box-shadow: .5px .5px .5px .5px grey">
-          <span v-if="notread"
-            style="width:22px;height:22px;border-radius:50%; background:red; position:absolute ;text-align:center; color:white ; font-family:'UD'!important">{{
-              notread }}</span>
-          <img @click="startChatSession" style="border-radius:10%;width:70%;height:70%; margin:15%" src="/img/chat.png">
+          </div>
         </div>
       </div>
     </div>
+
+
+    <div v-if="!hide" id="chat-container" style="height:100% ;  border-radius:30px ; background:none" class="card">
+
+      <div class="card-header text-white text-center"
+        style="height:60px ; background:#2f3237 ; border-radius: 15px 15px 0 0 ">
+        پشتیبانی آنلاین<br>
+        <button class="btn btn-secondary"
+          style="position:absolute;top:5px;right:5px;padding:0 7px;border-radius:50%!important ; width:25px!important; height:25px"
+          @click="hide = true">-</button>
+      </div>
+
+
+      <div class="card-body" style="height:320px; overflow:auto">
+        <div class=" chat-body" style="width:100%;height:300px;">
+          <div v-for="message in messages" :key="message.id" class="chat-section">
+            <template v-if="!message.admin">
+              <div style="max-width:85%;min-width:60% ; float:right ;">
+                <span style="width:100% ; background:grey ; padding:5%"
+                  class="card-text speech-bubble  float-right text-white subtle-blue-gradient">
+                  <span v-if="typeof (message.user) === 'string'"
+                    style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.user }} <br></span>
+                  <span v-else style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.username }}
+                    <br></span><br>
+                  {{ message.message }}
+                </span>
+              </div><br><br>
+              <div style="clear:both"></div>
+            </template>
+            <template v-else>
+
+              <div style=" float:right">
+                <span style="max-width:85% ;min-width:60% ;  float:left  ; padding:5%" class="card-text speech-bubble ">
+                  <span v-if="typeof (message.user) === 'string'"
+                    style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.user }} <br></span>
+                  <span v-else style="font:12px 'UD'; color:black ; font-weight:bold">{{ message.username }}
+                    <br></span><br>
+                  {{ message.message }}
+                </span>
+              </div><br><br>
+              <div style="clear:both"></div>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer text-muted" style="z-index:1 ; background: #2f3237">
+        <form @submit.prevent="postMessage">
+          <div>
+            <div class="col-sm-12">
+              <input class="inn" style="font-family:'yekan'; border-style:none" required v-model="message" type="text"
+                placeholder="متن پیام ..." />
+            </div><br><br>
+            <div class="col-sm-12">
+              <button class="btn btn-secondary" style="width:100% ; font-family: 'yekan'">ارسال پیام</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+
+
+    </div>
+  </div>
+  <div>
+
+  </div>
+  <div v-if="$store.state.isAuthenticated || uri" class="chat-btn"
+    style="background:#f5f5ff;border-radius:50%; box-shadow: .5px .5px .5px .5px grey">
+    <span v-if="notread"
+      style="width:22px;height:22px;border-radius:50%; background:red; position:absolute ;text-align:center; color:white ; font-family:'UD'!important">{{
+        notread }}</span>
+    <img @click="get_user(); $store.state.hide = false; hide = false"
+      style="border-radius:10%;width:70%;height:70%; margin:15%" src="/img/chat.png">
+  </div>
+  <div @click="hide2 = false" v-if="!$store.state.isAuthenticated && hide2 && !uri" class="chat-btn"
+    style="background:#f5f5ff;border-radius:50%; box-shadow: .5px .5px .5px .5px grey; z-index:100000000000000000">
+    <span v-if="notread"
+      style="width:22px;height:22px;border-radius:50%; background:red; position:absolute ;text-align:center; color:white ; font-family:'UD'!important">{{
+        notread }}</span>
+    <img style="border-radius:10%;width:70%;height:70%; margin:15%" src="/img/chat.png">
   </div>
 </template>
 <script>
@@ -131,93 +140,70 @@ export default {
       messages: {},
       message: '',
       uri: '',
-      hide: this.$store.state.hide
+      hide: this.$store.state.hide,
+      fullname: '',
+      mobile: ''
     }
   },
   mounted() {
     this.hider()
   },
-
   beforeMount() {
     this.get_user()
   },
 
 
+
   methods: {
     async get_user() {
-      if (localStorage.getItem('username') !== null) {
-        this.username = localStorage.getItem('username')
-        await axios
-          .post('chats/user', { username: localStorage.getItem('username') })
-          .then(response => {
-            this.username = response.data.username
-            this.uri = response.data.uri
-            if (response.data.uri) {
-              this.joinChatSession()
-              this.sessionStarted = true
-            }
-          })
-      } else {
-        await axios
-          .get('chats/user')
-          .then(response => {
-            this.username = response.data.username
-            this.uri = response.data.uri
-            if (response.data.uri) {
-              this.joinChatSession()
-              this.sessionStarted = true
-            }
-          })
-      }
+      if (localStorage.getItem('uri')) {
+        this.uri = localStorage.getItem('uri')
+        this.hide2 = true
+        this.$store.state.hide = false
+        this.hide = false
+        this.startChatSession()
+      } else
+        if (this.$store.state.isAuthenticated) {
+          await axios
+            .post('chats/user')
+            .then(response => {
+              this.username = response.data.username
+              this.uri = response.data.uri
+              localStorage.setItem('uri', response.data.uri)
+              if (response.data.uri) {
+                this.joinChatSession()
+                this.sessionStarted = true
+              }
+              this.startChatSession()
+            })
+        } else {
+          if (this.fullname && this.mobile)
+            await axios
+              .post('chats/user', { mobile: this.mobile, name: this.fullname })
+              .then(response => {
+                this.username = response.data.username
+                this.uri = response.data.uri
+                localStorage.setItem('uri', response.data.uri)
+                if (response.data.uri) {
+                  this.joinChatSession()
+                  this.sessionStarted = true
+                }
+                this.hide2 = true
+                this.$store.state.hide = false
+                this.hide = false
+                this.startChatSession()
+              })
+        }
+
     },
     hider() {
       this.$store.state.hide = true
       this.hide = this.$store.state.hide
     },
     async startChatSession() {
-      if (!localStorage.getItem('email') && (!this.$store.state.isAuthenticated)) {
-        this.hide2 = false
-      }
-      if (localStorage.getItem('email')) {
-        this.hide2 = true
-      }
-      if (this.sessionStarted) {
-        this.$store.state.hide = false
-        this.chatseen()
-        this.hide = this.$store.state.hide
-        this.fetchChatSessionHistory()
-      }
-      else {
-        if (this.$store.state.isAuthenticated) {
-          await axios
-            .post('chats/')
-            .then(data => data.data)
-            .then(data => {
-              this.sessionStarted = true
-              this.uri = data.uri
-              this.startChatSession()
-            })
-            .catch(() => {
-            })
-        } else {
-          if (localStorage.getItem('email')) {
-            await axios
-              .post('chats/', { email: localStorage.getItem('email') })
-              .then(data => data.data)
-              .then(data => {
-                this.sessionStarted = true
-                this.uri = data.uri
-                this.startChatSession()
-              })
-              .catch(() => {
-              })
-          } else if (this.emailadd) {
-            localStorage.setItem('email', this.emailadd)
-            this.startChatSession()
-          }
-        }
+      this.chatseen()
+      this.fetchChatSessionHistory()
 
-      }
     },
     async postMessage() {
       if (this.$store.state.isAuthenticated) {
@@ -253,25 +239,7 @@ export default {
         })
     },
     async joinChatSession() {
-      await axios
-        .patch(`chats/${this.uri}/`, { username: this.username })
-        .then(data => {
-          var user = ''
-          if (data.data.members) {
-            for (var item of data.data.members) {
-              if (item.username === this.username) {
-                user = item.username
-              }
-            }
-          }
-
-
-          if (user) {
-            // The user belongs/has joined the session
-            this.sessionStarted = true
-            this.fetchChatSessionHistory()
-          }
-        })
+      this.fetchChatSessionHistory()
     },
 
     async fetchChatSessionHistory() {
@@ -282,7 +250,6 @@ export default {
           // eslint-disable-next-line no-unused-vars
           var tempnotread = 0
           this.notread = data.data.notseen
-          this.chatseen()
           setTimeout(() => {
             this.fetchChatSessionHistory()
           }, 20000)

@@ -7,7 +7,10 @@
 
       <label for="" style="text-align: right;width: 100%;">از این قسمت ارز مورد نظر را انتخاب کنید</label>
       <select v-model="cur" style="text-align: center;" @change="get_miners()" name="" class="form-control" id="">
-        <option v-for="item in curs" v-bind:key="item" :value="item">
+        <option :value="''">
+          همه
+        </option>
+        <option v-for="item in curs" v-bind:key="item" :value="'/' + item">
           {{ item }}
         </option>
       </select>
@@ -89,7 +92,7 @@ export default {
     },
     async get_miners() {
       await axios
-        .get(`miners/${this.cur}`)
+        .get(`miners${this.cur}`)
         .then(response => response.data)
         .then(response => {
           this.miners = response
@@ -102,7 +105,7 @@ export default {
         .then(response => response.data)
         .then(response => {
           this.curs = response
-          this.cur = response[0]
+          this.cur = ''
           this.get_miners()
         })
     },

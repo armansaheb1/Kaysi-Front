@@ -1,4 +1,5 @@
 <template>
+  <Vcode type="inside" :show="true" @success="onSuccess" @close="onClose" />
   <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
     <CContainer>
       <CRow class="justify-content-center">
@@ -58,10 +59,14 @@
 
 <script>
 import axios from 'axios'
+import Vcode from "vue3-puzzle-vcode";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
+  components: {
+    Vcode
+  },
   methods: {
     async login() {
       var formData = {
