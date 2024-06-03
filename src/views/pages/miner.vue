@@ -21,7 +21,7 @@
         </CCardHeader>
         <CCardBody>
           <CCard v-for="item in miners" v-bind:key="item" style="margin-bottom: 15px" class="third">
-            <CCardHeader>
+            <CCardHeader style="height: 60px;font-size: 14px;font-weight: bold;">
               {{ item.title }}
               <img :src="item.get_cur_pic" alt="" style="position:relative; top: 5px; z-index: 10;width: 10%">
             </CCardHeader>
@@ -31,7 +31,8 @@
 
             </CCardBody>
 
-            <CCardFooter style="direction: rtl;text-align: justify; font-size: 14px;">
+            <CCardFooter
+              style="direction: rtl;text-align: justify; font-size: 14px; height: 415px; text-overflow:ellipsis;overflow: hidden;">
               {{ item.des }}
               <br><br>
 
@@ -48,7 +49,13 @@
                 میزان سود ماهیانه : {{ item.profit }}<a style="font: 10px arial;margin-left: 5px;">{{ item.get_cur
                   }}</a>
               </p>
-              <button @click="rent(item.id)" class="btn btn-primary form-control">اجاره کنید</button>
+              <input v-model="item.amount" type="number" placeholder="تعداد ماینر درخواستی" style="text-align: center;"
+                class="form-control">
+              <a style="font-size: 12px;font-weight: bold; float: right;"> پرداختی: {{ item.price * item.amount
+                }} USDT</a><br>
+              <a style="font-size: 12px;font-weight: bold; float: right;"> موجودی: {{ balance }} USDT</a>
+              <br>
+              <button @click="rent(item.id, item.amount)" class="btn btn-primary form-control">اجاره کنید</button>
               <br><br>
             </CCardFooter>
           </CCard>
@@ -77,24 +84,37 @@ export default {
     minersback: [],
     searchtxt: '',
     cur: '',
-    curs: []
+    curs: [],
+    balance: 0
 
   }),
   components: {
   },
   mounted() {
     this.get_currencies()
+    this.get_wal()
 
   },
   methods: {
     login() {
       this.$store.state.showloginindex = true
     },
+    async get_wal() {
+      await axios
+        .post(`wallets/6`)
+        .then(response => response.data)
+        .then(response => {
+          this.balance = response[0][1]
+        })
+    },
     async get_miners() {
       await axios
         .get(`miners${this.cur}`)
         .then(response => response.data)
         .then(response => {
+          for (var item of response) {
+            item.amount = ''
+          }
           this.miners = response
           this.minersback = response
         })
@@ -109,9 +129,9 @@ export default {
           this.get_miners()
         })
     },
-    async rent(id) {
+    async rent(id, amount) {
       await axios
-        .post(`rentminer`, { miner: id })
+        .post(`rentminers`, { miner: id, amount: amount })
         .then(response => response.data)
         .then(() => {
           const toPath = this.$route.go || '/miners'

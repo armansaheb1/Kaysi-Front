@@ -1,41 +1,37 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <CRow>
-    <CCol>
-      <CCard>
-        <CCardHeader>
-          برداشت از حساب ها
+  <div class="mm" style="overflow: auto;max-height: 70%;padding-bottom: 20px;">
+    <div v-for="item in subjects " v-bind:key="item">
+      <div v-if="item['sender'] == 1" style="width: 70%; direction: rtl;float: left;" class="alert alert-warning">
+        <h5 style="margin: 0">پشتیبانی</h5><br>
+        <p style="color: black">
+          {{ item['text'] }}
+        </p>
+      </div>
 
-        </CCardHeader>
-        <CCardBody>
-          <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden">
-            <div v-for="item in  currency " v-bind:key="item" class="card wals" style=""
-              :class="{ 'bannerbg-dark': $store.state.isDark, 'bannerbg-light': !$store.state.isDark }">
-              <div class="card-header"><img
-                  style="position:relative;width: 30%; margin: 0 35%; margin-top: 0px;float:none; aspect-ratio: 1/1"
-                  :src="item[0]">
-              </div>
-              <div class=" card-body">
+      <div v-else style="width: 70%; direction: rtl;float: right;" class="alert alert-success">
+        <h5 style="margin: 0">شما</h5><br>
+        <p style="color: black">
+          {{ item['text'] }}
+        </p>
+      </div>
+
+    </div><br><br>
+    <div style="height: 50px;"></div>
+
+    <div style="position: fixed; bottom: 0;left:0; width: 100%; height: 110px; background-color: gold; z-index: 100;">
+      <div style="float: left;width: 80%; height: 80%">
+        <textarea v-model="text" class="form-control" rows="2" style="margin: 2.5%; width: 95%; direction: rtl;"
+          placeholder="متن پیام"></textarea>
+
+      </div>
+      <div style="width: 20%; float: right;height: 100%;">
+        <button @click="addticket()" class="btn btn-warning" style="height:70px; width: 80%;margin: 20px">Send</button>
+      </div>
+    </div>
 
 
-                <form action="admindecrease" method="POST">
-                  <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
-                  <input class="form-control" type="text" name="" id="" placeholder="مبلغ"><br>
-                  <input class="form-control" type="text" name="" id="" placeholder="آدرس ولت"><br>
-                  <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
-                    ثبت
-                    واریز</button>
-
-
-                </form>
-              </div>
-            </div>
-          </div>
-        </CCardBody>
-      </CCard><br>
-
-    </CCol>
-  </CRow>
+  </div>
 </template>
 
 <script>
@@ -49,9 +45,15 @@ export default {
   },
   data: () => ({
     showModal: [],
-    user: ''
+    user: '',
+    subjects: [],
+    text: '',
+    title: ''
   }),
   mounted() {
+    setTimeout(() => {
+      this.$store.state.sidebarVisible = false
+    }, 100);
     this.get_user()
   },
   methods: {
@@ -59,11 +61,31 @@ export default {
       this.$store.state.showloginindex = true
     },
     async get_user() {
+      var id = this.$route.params.id
       await axios
-        .get(`user`)
+        .get(`tickets/${id}`)
         .then(response => response.data)
         .then(response => {
-          this.user = response
+          this.subjects = response
+          console.log(this.subjects)
+          setTimeout(() => {
+            var container = document.querySelector('html')
+            container.scrollTop = container.scrollHeight;
+          }, 100);
+
+        })
+    },
+    async addticket() {
+      var id = this.$route.params.id
+      await axios
+        .post(`ansticket`, { des: this.text, id: id })
+        .then(response => response.data)
+        .then(response => {
+          this.subjects = response
+          setTimeout(() => {
+            var container = document.querySelector('html')
+            container.scrollTop = container.scrollHeight;
+          }, 100);
         })
     }
   }
@@ -71,7 +93,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+.chat-btn {
+  display: none !important;
+}
+
 .bannerbg-dark {
   background-color: #0B0E11;
   color: white

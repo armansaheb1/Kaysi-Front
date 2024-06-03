@@ -18,14 +18,20 @@ const routes = [
         component: () => import('@/views/pages/AboutUs'),
       },
       {
-        path: 'login',
+        path: 'register/:key',
 
-        component: () => import('@/views/pages/Login'),
+        component: () => import('@/views/pages/Registerinv'),
       },
       {
         path: 'register',
 
         component: () => import('@/views/pages/Register'),
+      },
+
+      {
+        path: 'resetpass/:key',
+
+        component: () => import('@/views/pages/reset'),
       },
 
 
@@ -109,7 +115,12 @@ const routes = [
         component: () => import('@/views/pages/ChargeWithdraw.vue'),
       },
       {
-        path: '/ticket',
+        path: '/tickets',
+
+        component: () => import('@/views/pages/Tickets.vue'),
+      },
+      {
+        path: '/tickets/:id',
 
         component: () => import('@/views/pages/Ticket.vue'),
       },
@@ -118,6 +129,7 @@ const routes = [
 
         component: () => import('@/views/pages/Balances.vue'),
       },
+      
 
     ],
   },

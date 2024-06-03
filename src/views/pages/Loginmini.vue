@@ -2,9 +2,12 @@
   <Vcode :show="isshowl" @success="login()" @close="onClose" />
   <CRow class="justify-content-center" style="overflow: hidden;">
     <CCol :md="8">
-      <CCardGroup>
+      <CCardGroup v-if="!forg">
         <CCard class="p-4" style="height: 310px;width: 60%!important; float: left!important">
           <CCardBody>
+            <div style="margin-top: -30px;" v-if="this.myerror" class="alert alert-danger">
+              {{ myerror }}
+            </div>
             <CForm>
               <h1>ورود</h1>
               <CInputGroup class="mb-3" style="direction: ltr">
@@ -25,7 +28,7 @@
                   <CButton @click="isshowl = true" color="primary" class="px-4 form-control"> ورود </CButton>
                 </CCol>
                 <CCol :xs="12" class="text-right">
-                  <CButton color="link" class="px-0">
+                  <CButton @click="forg = true" color="link" class="px-0">
                     فراموشی رمز ؟
                   </CButton>
                 </CCol>
@@ -48,11 +51,39 @@
           </CCardBody>
         </CCard>
       </CCardGroup>
+      <CCard v-else style="height: 210px;width: 98%!important; float: left!important">
+        <CCardBody>
+          <div style="margin-top: -30px;" v-if="this.myerror" class="alert alert-danger">
+            {{ myerror }}
+          </div>
+          <CForm>
+            <h4>فراموشی کلمه عبور</h4>
+            <CInputGroup class="mb-3" style="direction: ltr">
+              <CInputGroupText>
+                <CIcon icon="cil-user" />
+              </CInputGroupText>
+              <CFormInput v-model="email" placeholder="ایمیل" autocomplete="username" />
+            </CInputGroup>
+
+            <CRow>
+              <CCol :xs="12">
+                <CButton @click="forget()" color="primary" class="px-4 form-control"> ورود </CButton>
+              </CCol>
+              <CCol :xs="12" class="text-right">
+                <CButton @click="forg = false" color="link" class="px-0">
+                  بازگشت به ورود
+                </CButton>
+              </CCol>
+            </CRow>
+          </CForm>
+        </CCardBody>
+      </CCard>
     </CCol>
   </CRow>
 </template>
 
 <script>
+import { CCard } from '@coreui/vue';
 import axios from 'axios'
 import Vcode from "vue3-puzzle-vcode";
 
@@ -63,7 +94,10 @@ export default {
     return {
       username: '',
       password: '',
-      isshowl: false
+      isshowl: false,
+      myerror: '',
+      forg: false,
+      email: ''
     }
   },
   components: {
@@ -77,6 +111,7 @@ export default {
           password: this.password
         })
         .then(response => {
+          this.myerror = ''
           const token = response.data.auth_token
           this.$store.commit('setToken', token)
           axios.defaults.headers.common.Authorization = 'Token ' + token
@@ -85,12 +120,36 @@ export default {
           this.$store.state.loginpop = false
           this.$store.state.loginpopmini = false
           this.$store.state.registerpop = false
+
+          axios.defaults.headers.common['Authorization'] = "Token " + token
+          setTimeout(() => {
+            this.vorood()
+          }, 500);
           const toPath = this.$route.go || '/dashboard'
           this.$router.push(toPath)
+          this.isshowl = false
 
         }
 
-        )
+        ).catch(data => {
+          this.isshowl = false
+          this.myerror = 'نام کاربری یا کلمه عبور درست نیست'
+          setTimeout(() => {
+            this.myerror = ''
+          }, 2000);
+        })
+    },
+    async vorood() {
+      await axios
+        .post('/vorood', {
+          username: this.username.toLowerCase(),
+        })
+    },
+    async forget() {
+      await axios
+        .post('/forgetreq', {
+          email: this.email.toLowerCase(),
+        })
     }
   }
 }

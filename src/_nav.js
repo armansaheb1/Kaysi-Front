@@ -59,14 +59,14 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: 'پرداخت و واریز',
+        name: '  واریز و برداشت',
         to: '/transactions',
       },
-      {
-        component: 'CNavItem',
-        name: 'درآمد ها',
-        to: '/profits',
-      },
+      // {
+      //   component: 'CNavItem',
+      //   name: 'درآمد ها',
+      //   to: '/profits',
+      // },
     ],
   },
   {
@@ -88,7 +88,7 @@ export default [
       },
       {
         component: 'CNavItem',
-        name: 'استخدام برنانه نویس',
+        name: 'استخدام برنامه نویس',
         to: '/jobs',
       },
       {
@@ -114,7 +114,7 @@ export default [
   {
     component: 'CNavItem',
     name: 'تیکت',
-    to: '/ticket',
+    to: '/tickets',
     icon: 'cil-envelope-open',
   },
   {

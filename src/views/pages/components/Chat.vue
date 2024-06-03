@@ -2,10 +2,12 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
 
-  <div class="container"
+  <div v-if="!hide || !hide2" class="containerss"
     style="background:none;width:100%; padding:0 ; border-radius:15%; margin:0!important; position: fixed;bottom: 0;">
-    <div style="margin:0; width:100%; height: 100%;">
-      <div v-if="!hide2" id="chat-container" style="height:100% ;  border-radius:30px ; background:none" class="card">
+    <div style="margin:0; width:100%; height: 100%;z-index: 1000;">
+      <div v-if="!hide2" id="chat-container"
+        style="height:100% ;  border-radius:30px ; background:none;z-index: 1000; position: relative; top: 0"
+        class="card">
 
         <div class="card-header text-white text-center"
           style="height:60px ; background:#2f3237 ; border-radius: 15px 15px 0 0 ">
@@ -17,7 +19,7 @@
 
 
         <div class="card-body" style="height:320px; overflow:auto">
-          <div class=" chat-body" style="width:100%;height:300px;">
+          <div class=" chat-body" style="width:100%;height:330px;">
             <div class="chat-section">
               <div class="card-footer text-muted" style="z-index:1;width:100%;padding:0; border-style:none"
                 id="emailadd">
@@ -29,6 +31,9 @@
                     </div><br>
                     <div class="col-12">
                       <input v-model="mobile" required type="text" placeholder="موبایل" />
+                    </div><br>
+                    <div class="col-12">
+                      <input v-model="email" required type="text" placeholder="ایمیل" />
                     </div><br>
                     <div class="col-12">
                       <button class="btn btn-dark" style="width:100%">شروع چت</button>
@@ -44,7 +49,8 @@
     </div>
 
 
-    <div v-if="!hide" id="chat-container" style="height:100% ;  border-radius:30px ; background:none" class="card">
+    <div v-if="!hide" id="chat-container" style="height:100% ;  border-radius:30px ; background:none;z-index: 1000"
+      class="card">
 
       <div class="card-header text-white text-center"
         style="height:60px ; background:#2f3237 ; border-radius: 15px 15px 0 0 ">
@@ -116,14 +122,16 @@
       style="width:22px;height:22px;border-radius:50%; background:red; position:absolute ;text-align:center; color:white ; font-family:'UD'!important">{{
         notread }}</span>
     <img @click="get_user(); $store.state.hide = false; hide = false"
-      style="border-radius:10%;width:70%;height:70%; margin:15%" src="/img/chat.png">
+      style="border-radius:50%;width:90%;height:90%; margin: 5%"
+      src="https://png.pngtree.com/element_our/png/20181229/vector-chat-icon-png_302635.jpg">
   </div>
   <div @click="hide2 = false" v-if="!$store.state.isAuthenticated && hide2 && !uri" class="chat-btn"
     style="background:#f5f5ff;border-radius:50%; box-shadow: .5px .5px .5px .5px grey; z-index:100000000000000000">
     <span v-if="notread"
       style="width:22px;height:22px;border-radius:50%; background:red; position:absolute ;text-align:center; color:white ; font-family:'UD'!important">{{
         notread }}</span>
-    <img style="border-radius:10%;width:70%;height:70%; margin:15%" src="/img/chat.png">
+    <img style="border-radius:50%;width:90%;height:90%; margin: 5%"
+      src="https://png.pngtree.com/element_our/png/20181229/vector-chat-icon-png_302635.jpg">
   </div>
 </template>
 <script>
@@ -139,6 +147,7 @@ export default {
       sessionStarted: false,
       messages: {},
       message: '',
+      email: '',
       uri: '',
       hide: this.$store.state.hide,
       fullname: '',
@@ -179,7 +188,7 @@ export default {
         } else {
           if (this.fullname && this.mobile)
             await axios
-              .post('chats/user', { mobile: this.mobile, name: this.fullname })
+              .post('chats/user', { mobile: this.mobile, name: this.fullname, email: this.email })
               .then(response => {
                 this.username = response.data.username
                 this.uri = response.data.uri

@@ -22,6 +22,7 @@
   <chat />
 
 </template>
+
 <script>
 import axios from 'axios'
 import { onBeforeMount } from 'vue'
@@ -122,23 +123,21 @@ export default {
   cursor: pointer;
 }
 
-.container {
-  position: relative;
-  z-index: 1000;
+.containerss {
+  right: 0;
   width: 40% !important;
-  right: 5px;
-  z-index: 100000;
+  z-index: 1000;
 }
 
 @media only screen and (max-width: 700px) {
-  .container {
-    position: relative;
-    z-index: 1000;
+  .containerss {
+
     width: 100% !important;
-    height: 100% !important;
-    right: 5px;
+    z-index: 1000;
   }
 }
+
+
 
 // Import Main styles for this application
 @import 'styles/style';

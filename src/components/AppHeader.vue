@@ -1,33 +1,52 @@
 <template>
+
   <CHeader position="sticky" :class="headerClassNames">
     <CContainer class="border-bottom px-4" fluid>
       <CHeaderToggler @click="$store.commit('toggleSidebar')" style="margin-inline-start: -14px">
         <CIcon icon="cil-menu" size="lg" />
       </CHeaderToggler>
+
+
+
       <CHeaderNav class="d-none d-md-flex">
 
       </CHeaderNav>
+
       <CHeaderNav class="ms-auto">
-        <CNavItem>
-          <CNavLink href="#">
+        <CDropdown variant="nav-item" placement="bottom-end">
+          <CDropdownToggle @click="notread()" :caret="false">
             <CIcon icon="cil-bell" size="lg" />
-          </CNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CNavLink href="#">
-            <CIcon icon="cil-list" size="lg" />
-          </CNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CNavLink href="#">
-            <CIcon icon="cil-envelope-open" size="lg" />
-          </CNavLink>
-        </CNavItem>
+            <a v-if="unread != 0" style="color: red;border-radius: 50%;width: 10px;">{{ unread
+              }}</a>
+            <a v-else style="color: green;border-radius: 50%;width: 10px;">{{ unread
+              }}</a>
+          </CDropdownToggle>
+          <CDropdownMenu>
+            <div v-for="item in notifs" v-bind:key="item">
+              <CDropdownItem v-if="!item.read" style="background-color: antiquewhite;direction: rtl;text-align: right;"
+                class="align-items-center">
+                <h5>{{ item.title }}</h5>
+                <p>{{ item.text }}</p>
+              </CDropdownItem>
+              <CDropdownItem v-else style="direction: rtl;text-align: right;" class="align-items-center">
+                <h5>{{ item.title }}</h5>
+                <p>{{ item.text }}</p>
+              </CDropdownItem>
+            </div>
+          </CDropdownMenu>
+        </CDropdown>
+
       </CHeaderNav>
       <CHeaderNav>
         <li class="nav-item py-1">
           <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
         </li>
+        <select @change="changelang()" v-model="lang">
+          <option value="fa">فارسی</option>
+
+          <option value="en">English</option>
+          <option value="fr">French</option>
+        </select>
         <CDropdown variant="nav-item" placement="bottom-end">
           <CDropdownToggle :caret="false">
             <CIcon v-if="colorMode === 'dark'" icon="cil-moon" size="lg" />
@@ -62,6 +81,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useColorModes } from '@coreui/vue'
 import AppBreadcrumb from './AppBreadcrumb'
@@ -72,6 +92,63 @@ export default {
     AppBreadcrumb,
     AppHeaderDropdownAccnt,
   },
+  methods: {
+    changelang() {
+      function setCookie(cname, cvalue) {
+        var d = new Date();
+        d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+      localStorage.setItem('lang', this.lang)
+      this.$store.state.lang = this.lang
+      setCookie('googtrans', `/fa/${this.$store.state.lang}`);
+      location.reload()
+    },
+
+    async get_notifs() {
+      await axios
+        .get(`notifications`)
+        .then(response => response.data)
+        .then(response => {
+          this.notifs = response
+          this.unread = 0
+          for (var item of response) {
+            if (!item.read) {
+              this.unread = this.unread + 1
+            }
+          }
+        })
+    },
+    async notread() {
+      await axios
+        .post(`notifications`)
+        .then(response => response.data)
+        .then(response => {
+          this.notifs = response
+          this.unread = 0
+          for (var item of response) {
+            if (!item.read) {
+              this.unread = this.unread + 1
+            }
+          }
+        })
+    },
+
+
+  },
+  mounted() {
+    this.get_notifs()
+    this.lang = this.$store.state.lang
+  },
+  data() {
+    return {
+      lang: 'fa',
+      notifs: [],
+      unread: 0
+    }
+  },
+
   setup() {
     const headerClassNames = ref('mb-4 p-0')
     const { colorMode, setColorMode } = useColorModes('coreui-free-vue-admin-template-theme')
@@ -94,3 +171,4 @@ export default {
   },
 }
 </script>
+<style></style>

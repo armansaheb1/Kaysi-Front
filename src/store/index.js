@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     sidebarVisible: '',
-    sidebarUnfoldable: true,
+    sidebarUnfoldable: false,
     theme: 'light',
     loginpop: false,
     loginpopmini: false,
@@ -14,11 +14,17 @@ export default createStore({
     isDark: true,
     showloginindex: false,
     showloginnavbar: false,
-    registerpop: false
+    registerpop: false,
+    lang: 'fa'
 
   },
   mutations: {
     initializeStore(state) {
+      if (localStorage.getItem('lang')) {
+        state.lang = localStorage.getItem('lang')
+      } else {
+        state.lang = 'fa'
+      }
       if (localStorage.getItem('isDark')) {
         if (localStorage.getItem('isDark') === 'false') {
           state.isDark = false
@@ -27,6 +33,7 @@ export default createStore({
         }
 
       }
+      
       if (localStorage.getItem('token')) {
         state.token = localStorage.getItem('token')
         state.isAuthenticated = true

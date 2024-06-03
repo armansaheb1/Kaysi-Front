@@ -8,20 +8,25 @@
           موجودی در یک نگاه
 
         </CCardHeader>
-        <CCardBody style="background-color: rgba(255,255,255,0.15);">
-          <GChart style="float: left;" type="PieChart" :data="balancees" :options="{
+
+        <CCardBody style="background-color: rgba(255,255,255,0.15);text-align: right;">
+          <CChartDoughnut style="width: 30%;float: left;" :data="balancees" />
+          <!-- <GChart style="float: left;" type="PieChart" :data="balancees" :options="{
             title: 'موجودی دلاری',
             pieHole: 0.3,
-            width: width * .85,
+            width: width * .5,
             height: width / 4,
             textStyle: { color: '#FFF' },
             backgroundColor: 'transparent',
-          }" />
-          <h4 style="float: left; width: 40%">
+          }" /> -->
+          <h4 style="float: right; width: 40%">
             مجموع موجودی دلاری: {{ balances.toFixed(2) }}
           </h4>
         </CCardBody>
-      </CCard><br><br>
+
+      </CCard><br>
+      <input @input="search()" v-model="searchtxt" type="text" placeholder="...جستوجو " style="text-align: center;"
+        class="form-control"><br>
       <CCard>
         <CCardHeader>
           موجودی حساب ها
@@ -34,8 +39,9 @@
                 <tr>
                   <th class="col-1">ارز</th>
                   <th class="col-2"></th>
-                  <th class="col-2" style="text-align: center;">قیمت</th>
                   <th class="col-2" style="text-align: center;">موجودی</th>
+                  <th class="col-2" style="text-align: center;">قیمت</th>
+
                   <th class="col-5" style="text-align: left;">عملیات</th>
                 </tr>
               </thead>
@@ -66,15 +72,7 @@
                     </h6>
                   </td>
 
-                  <td class="notmob" v-if="item[5].toFixed(10) < 0.000001" style="text-align: center;padding-top: 25px">
-                    {{ item[5].toFixed(10) }}
-                  </td>
-                  <td class="notmob" v-else-if="item[5] > 100" style="text-align: center;padding-top: 25px">
-                    {{ parseInt(item[5]) }}
-                  </td>
-                  <td class="notmob" v-else style="text-align: center;padding-top: 25px">
-                    {{ item[5].toFixed(6) }}
-                  </td>
+
 
 
 
@@ -90,9 +88,18 @@
                       {{ item[1].toFixed(6) }}
                     </h6>
                     <h6 style="margin: auto; text-align: center;font-family:'calibri';">
-                      {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(6) }}
+                      {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(2) }}
                     </h6>
                     <br>
+                  </td>
+                  <td class="notmob" v-if="item[5].toFixed(10) < 0.000001" style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(10) }}
+                  </td>
+                  <td class="notmob" v-else-if="item[5] > 100" style="text-align: center;padding-top: 25px">
+                    {{ parseInt(item[5]) }}
+                  </td>
+                  <td class="notmob" v-else style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(6) }}
                   </td>
                   <td class="col-6 notmob" style="text-align: left;">
                     <a style="margin: 5px" :href="`/charge/${item[3]}`" class="btn btn-success"> واریز</a>
@@ -119,15 +126,7 @@
                     </h6>
                   </td>
 
-                  <td class="notmob" v-if="item[5] < 0.000001" style="text-align: center;padding-top: 25px">
-                    {{ item[5].toFixed(10) }}
-                  </td>
-                  <td class="notmob" v-else-if="item[5] > 100" style="text-align: center;padding-top: 25px">
-                    {{ parseInt(item[5]) }}
-                  </td>
-                  <td class="notmob" v-else style="text-align: center;padding-top: 25px">
-                    {{ item[5].toFixed(6) }}
-                  </td>
+
 
 
                   <td class="col-3" style="text-align: center;">
@@ -138,6 +137,15 @@
                       {{ parseFloat(item[1]) * parseFloat(item[5]) }}
                     </h6>
                     <br>
+                  </td>
+                  <td class="notmob" v-if="item[5] < 0.000001" style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(10) }}
+                  </td>
+                  <td class="notmob" v-else-if="item[5] > 100" style="text-align: center;padding-top: 25px">
+                    {{ parseInt(item[5]) }}
+                  </td>
+                  <td class="notmob" v-else style="text-align: center;padding-top: 25px">
+                    {{ item[5].toFixed(6) }}
                   </td>
                   <td class="col-6 notmob" style="text-align: left;">
                     <a style="margin: 5px" :href="`/charge/${item[3]}`" class="btn btn-success"> واریز</a>
@@ -186,7 +194,7 @@
                         {{ item[1] }}
                       </h6>
                       <h6 style="margin: auto; text-align: center;font-family:'calibri';">
-                        {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(6) }}
+                        {{ (parseFloat(item[1]) * parseFloat(item[5])).toFixed(2) }}
                       </h6>
                       <br>
                     </a>
@@ -242,8 +250,8 @@
 
 <script>
 import axios from 'axios'
-
-import { GChart } from 'vue-google-charts'
+import { CChartDoughnut } from '@coreui/vue-chartjs'
+// import { GChart } from 'vue-google-charts'
 
 
 export default {
@@ -256,15 +264,25 @@ export default {
     showModal: [],
     user: '',
     wallets: [],
-    balancees: [['ارز', 'موجودی دلاری']],
+    walletsback: [],
+    balancees: {
+      labels: [],
+      datasets: [
+        {
+          backgroundColor: [],
+          data: [],
+        },]
+    },
     width: 0,
     balances: 0,
-    mob: false
+    mob: false,
+    searchtxt: ''
   }),
   components: {
-    GChart
+    // GChart,
+    CChartDoughnut
   },
-  mounted() {
+  beforeMount() {
     this.get_user()
     this.get_wallets()
   },
@@ -287,21 +305,50 @@ export default {
         })
     },
     async get_wallets() {
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
       await axios
         .get(`wallets`)
         .then(response => response.data)
         .then(response => {
           console.log(response)
+          this.walletsback = response
           this.wallets = response
           this.balances = 0
+          this.balancees = {
+            labels: [],
+            datasets: [
+              {
+                backgroundColor: [],
+                data: [],
+              },]
+          }
           for (var item of response) {
             if (item[1]) {
-              this.balancees.push([item[2], parseFloat(item[1]) * parseFloat(item[5])])
-              this.balances = this.balances + parseFloat(item[1]) * parseFloat(item[5])
-            }
+              this.balancees.labels.push(item[2])
+              this.balancees.datasets[0].data.push(parseInt(parseFloat(item[1]) * parseFloat(item[5])))
+              this.balancees.datasets[0].backgroundColor.push(getRandomColor())
 
+              this.balances = this.balances + (parseFloat(item[1]) * parseFloat(item[5]))
+            }
           }
+
         })
+    },
+    search() {
+      this.wallets = []
+      for (var item of this.walletsback) {
+        if (item[2].toLowerCase().includes(this.searchtxt.toLowerCase())) {
+          this.wallets.push(item)
+        }
+      }
     }
   }
 }

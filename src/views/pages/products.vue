@@ -12,13 +12,14 @@
           <table style="direction: rtl; text-align: center;" class="table table-responsive">
             <thead v-if="!mob">
               <tr>
-                <th>ارز</th>
+                <th>ماینر</th>
                 <th>مبلغ</th>
                 <th>زمان ثبت</th>
+                <th>زمان پایان</th>
                 <th>دوره سود</th>
                 <th>پلن</th>
                 <th>درصد سود</th>
-                <th>عملیات</th>
+                <th>وضعیت</th>
               </tr>
             </thead>
 
@@ -30,26 +31,30 @@
 
                 </td>
                 <td style="height: 60px">
-                  {{ item.deposit }}
+                  {{ item.miner.price }}
 
                 </td>
                 <td style="height: 60px">
-                  {{ item.date_field }}
+                  {{ tojala(item.start_date) }}
+
+                </td>
+                <td style="height: 60px">
+                  {{ tojala(new Date().setDate(new Date(item.start_date).getDate() + 30)) }}
 
                 </td>
                 <td>
-                  {{ item.plan.period }}
+                  {{ item.miner.period }}
                 </td>
                 <td>
-                  {{ item.plan.title }}
+                  {{ item.miner.title }}
                 </td>
                 <td>
-                  {{ item.plan.percent }}
+                  {{ item.miner.profit }}
                 </td>
                 <td>
-                  <button @click="close(item.id)" class="btn btn-danger">
-                    بستن پلن
-                  </button>
+                  {{ parseFloat(item.paid).toFixed(6) }}{{ item.miner.currency.brand }}
+                  <ProgressBar style="color: black!important"
+                    :value="parseInt(parseFloat(item.paid) / parseFloat(item.miner.profit) * 100)" />
                 </td>
 
               </tr>
@@ -76,7 +81,7 @@
               </tr>
               <tr style="border-color: transparent;">
                 <td colspan="3" class="col-8">
-                  {{ item.plan.title }}
+                  {{ item.miner.title }}
                 </td>
               </tr>
               <tr style="border-color: transparent;">
@@ -84,24 +89,30 @@
                 <td colspan="5" style="height: 60px">
                   <table class="table">
                     <tr>
-                      <td style="text-align: right;">مبلغ شروع</td>
-                      <td style="text-align: left;">{{ item.deposit }}</td>
-                    </tr>
-
-
-                    <tr>
-                      <td style="text-align: right;">زمان شروع</td>
-                      <td style="text-align: left;">{{ tojala(item.date_field) }}</td>
+                      <td class="col-6" style="width: 50%;text-align: right;">مبلغ شروع</td>
+                      <td class="col-6" style="width: 50%;text-align: left;">{{ item.miner.price }}</td>
                     </tr>
 
                     <tr>
-                      <td style="text-align: right;">دوره</td>
-                      <td style="text-align: left;">{{ item.plan.period }}</td>
+                      <td class="col-6" style="width: 50%;text-align: right;">زمان شروع</td>
+                      <td class="col-6" style="width: 50%;text-align: left;">{{
+                        tojala(item.start_date) }}</td>
                     </tr>
 
                     <tr>
-                      <td style="text-align: right;">درصد سود</td>
-                      <td style="text-align: left;">{{ item.plan.percent }}</td>
+                      <td class="col-6" style="width: 50%;text-align: right;">زمان پایان</td>
+                      <td class="col-6" style="width: 50%;text-align: left;">{{ tojala(new Date().setDate(new
+                        Date(item.start_date).getDate() + 30)) }}</td>
+                    </tr>
+
+                    <tr>
+                      <td class="col-6" style="width: 50%;text-align: right;">دوره</td>
+                      <td class="col-6" style="width: 50%;text-align: left;">{{ item.miner.period }}</td>
+                    </tr>
+
+                    <tr>
+                      <td class="col-6" style="width: 50%;text-align: right;">درصد سود</td>
+                      <td class="col-6" style="width: 50%;text-align: left;">{{ item.miner.profit }}</td>
                     </tr>
                   </table>
 
@@ -115,10 +126,10 @@
 
               </tr>
               <tr>
-                <td colspan="5">
-                  <button @click="close(item.id)" class="btn btn-danger form-control">
-                    بستن پلن
-                  </button>
+                <td>
+                  {{ parseFloat(item.paid).toFixed(6) }}{{ item.miner.currency.brand }}
+                  <ProgressBar style="color: black!important"
+                    :value="parseInt(parseFloat(item.paid) / parseFloat(item.miner.profit) * 100)" />
                 </td>
               </tr>
             </tbody>
@@ -133,7 +144,8 @@
 <script>
 
 import axios from 'axios'
-import moment from "moment-jalaali";
+import moment from "moment-jalaali"
+import ProgressBar from 'primevue/progressbar';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -150,8 +162,10 @@ export default {
     pic: '',
     mob: false,
     merrors: '',
+    value: 20
   }),
   components: {
+    ProgressBar
   },
   mounted() {
     this.get_size()
@@ -179,18 +193,21 @@ export default {
     async get_plans() {
 
       await axios
-        .get(`plan`)
+        .get(`miner`)
         .then(response => response.data)
         .then(response => {
           this.plans = response
+          setTimeout(() => {
+            this.get_plans()
+          }, 30000);
         })
     },
     async close(id = null) {
       await axios
         .post(`closeplan`, { bidid: id })
         .then(response => response.data)
-        .then(() => {
-          this.get_plans()
+        .then(response => {
+          this.plans = response
         }).catch(data => {
           console.log(data)
           this.$swal.fire('', data.response.data, "error");
@@ -202,7 +219,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .bannerbg-dark {
   background-color: #0B0E11;
   color: white
@@ -264,5 +281,13 @@ a {
     display: block;
   }
 }
+
+.container {
+  margin: 0
+}
+
+.p-progressbar .p-progressbar-label {
+  color: black !important;
+  text-align: center
+}
 </style>
-<style></style>

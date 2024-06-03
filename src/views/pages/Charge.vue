@@ -11,6 +11,7 @@
           <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
             :src="item.get_qr">
           <br>
+          <a style="float: right;text-align: right;">موجودی فعلی: {{ balance }}</a>
           <input type="text" name="" id="" class="form-control" :value="item.address"
             style="border-radius: 5px 5px 0 0;">
           <button class="btn btn-warning"
@@ -44,11 +45,13 @@ export default {
   data: () => ({
     showModal: [],
     user: '',
-    currency: []
+    currency: [],
+    balance: 0
   }),
   mounted() {
     this.get_user()
     this.get_currency()
+    this.get_wallet()
   },
   methods: {
     login() {
@@ -71,6 +74,15 @@ export default {
         .then(response => {
           console.log(response)
           this.currency = [response]
+        })
+    },
+    async get_wallet() {
+      var id = this.$route.params.id
+      await axios
+        .post(`wallets/${id}`)
+        .then(response => response.data)
+        .then(response => {
+          this.balance = [response][0][0][1]
         })
     },
     async submitcharge() {

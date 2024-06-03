@@ -13,7 +13,8 @@
 
 
               <form @submit.prevent="submitwith()">
-                <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
+
+                <a style="float: right;text-align: right;">موجودی فعلی: {{ balance }}</a>
                 <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
                 <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
                 <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
@@ -44,13 +45,15 @@ export default {
   data: () => ({
     showModal: [],
     user: '',
-    currency: []
+    currency: [],
+    balance: 0
   }),
   components: {
   },
   mounted() {
     this.get_user()
     this.get_currency()
+    this.get_wallet()
   },
   methods: {
     login() {
@@ -83,7 +86,16 @@ export default {
           const toPath = this.$route.go || '/balances'
           this.$router.push(toPath)
         })
-    }
+    },
+    async get_wallet() {
+      var id = this.$route.params.id
+      await axios
+        .post(`wallets/${id}`)
+        .then(response => response.data)
+        .then(response => {
+          this.balance = [response][0][0][1]
+        })
+    },
   }
 }
 </script>

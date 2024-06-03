@@ -2,6 +2,9 @@
 <template>
   <CRow>
     <CCol>
+      <CFormInput @input="search()" v-model="searchtxt" placeholder="Search..." style="text-align: center;">
+      </CFormInput>
+      <br>
       <CCard>
         <CCardHeader>
           تاریخچه تراکنش ها
@@ -11,6 +14,7 @@
           <table class="table" style="margin: 0; text-align: center;">
             <thead>
               <tr>
+                <th>#</th>
                 <th scope="col">نوع ارز</th>
                 <th scope="col">مبلغ</th>
                 <th scope="col">نوع تراکنش</th>
@@ -19,6 +23,7 @@
             </thead>
             <tbody>
               <tr v-for="item in transactions" v-bind:key="item">
+                <th>{{ item[5] }}</th>
                 <th scope="col"><img :src="item[0]" style="height: 40px;" alt=""></th>
                 <th scope="col">{{ item[1] }}</th>
                 <th scope="col">{{ item[2] }}</th>
@@ -35,6 +40,7 @@
 
 <script>
 
+import { CFormInput } from '@coreui/vue';
 import axios from 'axios'
 
 export default {
@@ -46,7 +52,9 @@ export default {
   data: () => ({
     showModal: [],
     transactions: [],
+    transactionsback: [],
     currency: '',
+    searchtxt: '',
     plans: [],
     plan: '',
     pic: ''
@@ -65,8 +73,19 @@ export default {
         .then(response => response.data)
         .then(response => {
           this.transactions = response
+          this.transactionsback = response
         })
     },
+    search() {
+      setTimeout(() => {
+        this.transactions = []
+        for (var item of this.transactionsback) {
+          if (item[5].includes(this.searchtxt)) {
+            this.transactions.push(item)
+          }
+        }
+      }, 100);
+    }
   }
 }
 </script>

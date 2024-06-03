@@ -1,7 +1,39 @@
 <template>
+  <div style="width: 100%; top : 0; background-color: rgba(0, 0, 0, 0.4)">
+    <nav
+      style="background: black;border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: absolute; top: 0; z-index:  100">
+      <ul style="z-index:  100; margin : 0; list-style: none;">
+        <li style="margin-top: 16px" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="/">
+            <img src="/logo.png" style="border-radius: 50%;height: 50px; border-radius: 50%;" alt="">
+          </a>
+        </li>
+        <li style="" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="/">خانه</a>
+        </li>
+        <li style="" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="/about-us">درباره
+            ما</a>
+        </li>
+        <li style="" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="/contact-us">تماس با
+            ما</a>
+        </li>
+
+
+
+
+        <li v-if="!$store.state.isAuthenticated" style="" class="lil"><a
+            style="font-size: 12px!important; color: whitesmoke; text-decoration: none;" class="btn btn-success"
+            @click="$store.state.loginpopmini = true">ورود /
+            ثبت نام</a>
+        </li>
+        <li v-else style="" class="lil"><a style="font-size: 12px!important; color: whitesmoke; text-decoration: none;"
+            class="btn btn-success" href="/dashboard">داشبورد</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
   <Vcode :show="isShowl" @success="register()" @close="onClose" />
   <div class="bg-body-tertiary min-vh-100  align-items-center"
-    style="width: 100%;padding-top: 90px;overflow-y: auto; overflow-x: hidden;max-height: 350px; background: url(/regback.png);background-size: 100% 100%;">
+    style="padding-top: 150px;width: 100%;padding-top: 150px;overflow-y: auto; overflow-x: hidden;max-height: 350px; background: url(/regback.png);background-size: 100% 100%;">
 
 
 
@@ -13,6 +45,9 @@
               class="btn btn-secondary">-</button> -->
             <div style="margin-top: -10px;" v-if="this.myerror" class="alert alert-danger">
               {{ myerror }}
+            </div>
+            <div style="margin-top: -10px;" v-if="this.mygoal" class="alert alert-success">
+              {{ mygoal }}
             </div>
             <form @submit.prevent="isShowl = true">
               <h3>ثبت نام </h3>
@@ -93,11 +128,24 @@ export default {
     return {
       isShowl: false,
       myerror: '',
-      email: ''
+      email: '',
+      mygoal: ''
     }
   },
   methods: {
+    async inv() {
+      var key = this.$route.params.key
+      if (this.password == this.repassword) {
+        await axios
+          .post('inv', {
+            username: this.username.toLowerCase(),
+            key: key
+          })
+      }
+    },
+
     async register() {
+      var key = this.$route.params.key
       if (this.password == this.repassword) {
         await axios
           .post('/users/', {
@@ -108,13 +156,21 @@ export default {
             mobile: this.mobile,
             email: this.email
           })
-          .then(response => {
-            this.$store.state.registerpop = false
+          .then(() => {
+            this.isShowl = false
+            this.inv()
+            this.mygoal = 'با موفقیت ثبت نام کردید به صفحه اصلی منتقل خواهید شد'
+            setTimeout(() => {
+              const toPath = this.$route.go || '/'
+              this.$router.push(toPath)
+            }, 2000);
+
 
           }
 
           ).catch(data => {
             this.isShowl = false
+
             this.myerror = 'کلمه عبور پیچیده تری انتخاب کنید'
           })
       } else {
@@ -126,3 +182,103 @@ export default {
 }
 
 </script>
+<style>
+.lil {
+  float: left;
+  margin: 18px 15px
+}
+
+.lir {
+  float: right;
+  margin: 18px 15px
+}
+
+.lil a {
+  font-size: 24px;
+}
+
+.lir a {
+  font-size: 24px;
+}
+
+.third {
+  display: flex;
+  width: 32%;
+  margin: 0.5%;
+  border-radius: 2%;
+  float: right;
+  text-align: center
+}
+
+.mob {
+  display: none;
+}
+
+.nmob {
+  display: block;
+}
+
+.second {
+  width: 43%;
+  margin: .5%;
+  float: right;
+}
+
+@media only screen and (max-width: 1023px) {
+
+  .second {
+    width: 93%;
+    margin: .5%;
+    float: right;
+  }
+
+  .lil a {
+    font-size: 14px;
+    text-decoration: none;
+    color: smokewhite
+  }
+
+  .lir a {
+    font-size: 14px;
+    text-decoration: none;
+    color: smokewhite
+  }
+
+  .lil {
+    float: left;
+    margin: 25px 5px
+  }
+
+  .lir {
+    float: right;
+    margin: 25px 5px
+  }
+
+}
+
+@media only screen and (max-width: 767px) {
+  .mob {
+    display: block;
+  }
+
+  .nmob {
+    display: none;
+  }
+
+  .wals {
+    width: 94%;
+    float: left;
+    margin: 3%;
+  }
+
+  .third {
+    display: flex;
+    width: 99%;
+    margin: 0.5%;
+    border-radius: 2%;
+    float: right;
+    text-align: center
+  }
+
+}
+</style>

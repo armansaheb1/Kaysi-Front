@@ -3,9 +3,9 @@
   <div>
     <div style="width: 100%; top : 0; background-color: rgba(0, 0, 0, 0.4)">
       <nav
-        style="border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: absolute; top: 0; z-index:  100">
+        style="background: black;border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: absolute; top: 0; z-index:  100">
         <ul style="z-index:  100; margin : 0; list-style: none;">
-          <li style="margin-top: 16px" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="">
+          <li style="margin-top: 16px" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="/">
               <img src="/logo.png" style="border-radius: 50%;height: 50px; border-radius: 50%;" alt="">
             </a>
           </li>

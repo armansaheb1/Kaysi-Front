@@ -8,7 +8,7 @@
       ">
     <CSidebarHeader class="border-bottom">
       <RouterLink custom to="/" v-slot="{ href, navigate }">
-        <CSidebarBrand style="margin: auto" v-bind="$attrs" as="a" :href="href" @click="navigate">
+        <CSidebarBrand style="margin: auto" v-bind="$attrs" as="a" href="/" @click="navigate">
           <img src="/logo.png" style="height: 53px;width: 53px; margin: -10px auto; display: block;border-radius: 50%;"
             alt="">
         </CSidebarBrand>
@@ -16,9 +16,7 @@
       <CCloseButton class="d-lg-none" dark @click="$store.commit('toggleSidebar')" />
     </CSidebarHeader>
     <AppSidebarNav />
-    <CSidebarFooter class="border-top d-none d-lg-flex">
-      <CSidebarToggler @click="$store.commit('toggleUnfoldable')" />
-    </CSidebarFooter>
+
   </CSidebar>
 </template>
 

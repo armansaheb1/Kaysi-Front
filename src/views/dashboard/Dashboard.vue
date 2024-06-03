@@ -1,154 +1,174 @@
 <template>
   <div>
+    <CRow>
+      <CCol>
+        <CCard>
+          <CCardHeader>
+            موجودی در یک نگاه
+
+          </CCardHeader>
+
+          <CCardBody style="background-color: rgba(255,255,255,0.15);text-align: right;">
+            <CChartDoughnut style="width: 30%;float: left;" :data="balancees" />
+            <!-- <GChart style="float: left;" type="PieChart" :data="balancees" :options="{
+            title: 'موجودی دلاری',
+            pieHole: 0.3,
+            width: width * .5,
+            height: width / 4,
+            textStyle: { color: '#FFF' },
+            backgroundColor: 'transparent',
+          }" /> -->
+            <h6 style="float: right; width: 50%">
+              مجموع موجودی دلاری:<br><br> {{ balances.toFixed(2) }}
+            </h6>
+          </CCardBody>
+
+        </CCard><br>
+
+        <CCard>
+          <CCardHeader>
+            لینک دعوت دوستان
+          </CCardHeader>
+
+          <CCardBody style="background-color: rgba(255,255,255,0.15);text-align: right;">
+            <CInputGroup class="mb-3">
+              <CInputGroupText @click="copy()" class="copy-btn">
+                کپی
+              </CInputGroupText>
+              <input style="text-align: left;" class="form-control" id="myInput" required v-model="ref"
+                placeholder="موبایل" autocomplete="email" />
+            </CInputGroup>
+
+          </CCardBody>
+        </CCard>
+
+        <br>
+        <CCard>
+          <CCardHeader>
+            زیر مجموعه ها
+          </CCardHeader>
+          <CCardHeader style="text-align: center;background-color: beige;">
+            سطح ۱
+          </CCardHeader>
+
+          <CCardBody style="background-color: rgba(255,255,255,0.15);text-align: right;">
+            <CCard style="width: 24%;float: right;margin: .5%">
+
+            </CCard>
+
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
 
   </div>
 </template>
 
 <script>
-import avatar1 from '@/assets/images/avatars/1.jpg'
-import avatar2 from '@/assets/images/avatars/2.jpg'
-import avatar3 from '@/assets/images/avatars/3.jpg'
-import avatar4 from '@/assets/images/avatars/4.jpg'
-import avatar5 from '@/assets/images/avatars/5.jpg'
-import avatar6 from '@/assets/images/avatars/6.jpg'
-import MainChart from './MainChart'
-import WidgetsStatsA from './../widgets/WidgetsStatsTypeA.vue'
-import WidgetsStatsD from './../widgets/WidgetsStatsTypeD.vue'
-
+import axios from 'axios';
+import { CChartDoughnut } from '@coreui/vue-chartjs'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Dashboard',
   components: {
-    MainChart,
-    WidgetsStatsA,
-    WidgetsStatsD,
-  },
-  setup() {
-    const progressGroupExample1 = [
-      { title: 'Monday', value1: 34, value2: 78 },
-      { title: 'Tuesday', value1: 56, value2: 94 },
-      { title: 'Wednesday', value1: 12, value2: 67 },
-      { title: 'Thursday', value1: 43, value2: 91 },
-      { title: 'Friday', value1: 22, value2: 73 },
-      { title: 'Saturday', value1: 53, value2: 82 },
-      { title: 'Sunday', value1: 9, value2: 69 },
-    ]
-    const progressGroupExample2 = [
-      { title: 'Male', icon: 'cil-user', value: 53 },
-      { title: 'Female', icon: 'cil-user-female', value: 43 },
-    ]
-    const progressGroupExample3 = [
-      {
-        title: 'Organic Search',
-        icon: 'cib-google',
-        percent: 56,
-        value: '191,235',
-      },
-      { title: 'Facebook', icon: 'cib-facebook', percent: 15, value: '51,223' },
-      { title: 'Twitter', icon: 'cib-twitter', percent: 11, value: '37,564' },
-      { title: 'LinkedIn', icon: 'cib-linkedin', percent: 8, value: '27,319' },
-    ]
-    const tableExample = [
-      {
-        avatar: { src: avatar1, status: 'success' },
-        user: {
-          name: 'Yiorgos Avraamu',
-          new: true,
-          registered: 'Jan 1, 2023',
-        },
-        country: { name: 'USA', flag: 'cif-us' },
-        usage: {
-          value: 50,
-          period: 'Jun 11, 2023 - Jul 10, 2023',
-          color: 'success',
-        },
-        payment: { name: 'Mastercard', icon: 'cib-cc-mastercard' },
-        activity: '10 sec ago',
-      },
-      {
-        avatar: { src: avatar2, status: 'danger' },
-        user: {
-          name: 'Avram Tarasios',
-          new: false,
-          registered: 'Jan 1, 2023',
-        },
-        country: { name: 'Brazil', flag: 'cif-br' },
-        usage: {
-          value: 22,
-          period: 'Jun 11, 2023 - Jul 10, 2023',
-          color: 'info',
-        },
-        payment: { name: 'Visa', icon: 'cib-cc-visa' },
-        activity: '5 minutes ago',
-      },
-      {
-        avatar: { src: avatar3, status: 'warning' },
-        user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2023' },
-        country: { name: 'India', flag: 'cif-in' },
-        usage: {
-          value: 74,
-          period: 'Jun 11, 2023 - Jul 10, 2023',
-          color: 'warning',
-        },
-        payment: { name: 'Stripe', icon: 'cib-cc-stripe' },
-        activity: '1 hour ago',
-      },
-      {
-        avatar: { src: avatar4, status: 'secondary' },
-        user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2023' },
-        country: { name: 'France', flag: 'cif-fr' },
-        usage: {
-          value: 98,
-          period: 'Jun 11, 2023 - Jul 10, 2023',
-          color: 'danger',
-        },
-        payment: { name: 'PayPal', icon: 'cib-cc-paypal' },
-        activity: 'Last month',
-      },
-      {
-        avatar: { src: avatar5, status: 'success' },
-        user: {
-          name: 'Agapetus Tadeáš',
-          new: true,
-          registered: 'Jan 1, 2023',
-        },
-        country: { name: 'Spain', flag: 'cif-es' },
-        usage: {
-          value: 22,
-          period: 'Jun 11, 2023 - Jul 10, 2023',
-          color: 'primary',
-        },
-        payment: { name: 'Google Wallet', icon: 'cib-cc-apple-pay' },
-        activity: 'Last week',
-      },
-      {
-        avatar: { src: avatar6, status: 'danger' },
-        user: {
-          name: 'Friderik Dávid',
-          new: true,
-          registered: 'Jan 1, 2023',
-        },
-        country: { name: 'Poland', flag: 'cif-pl' },
-        usage: {
-          value: 43,
-          period: 'Jun 11, 2023 - Jul 10, 2023',
-          color: 'success',
-        },
-        payment: { name: 'Amex', icon: 'cib-cc-amex' },
-        activity: 'Last week',
-      },
-    ]
-
-    return {
-      tableExample,
-      progressGroupExample1,
-      progressGroupExample2,
-      progressGroupExample3,
-    }
+    CChartDoughnut
   },
   mounted() {
-    this.$store.state.loginpop = false
-    this.$store.state.registerpop = false
+    this.get_wallets()
+    this.get_user()
+    this.get_invs()
+  },
+  data: () => ({
+    showModal: [],
+    ref: '',
+    wallets: [],
+    walletsback: [],
+    balancees: {
+      labels: [],
+      datasets: [
+        {
+          backgroundColor: [],
+          data: [],
+        },]
+    },
+    width: 0,
+    balances: 0,
+    mob: false,
+    searchtxt: '',
+    invs: []
+  }),
+  methods: {
+    async get_invs() {
+
+      await axios
+        .post(`inv`).then(response => response.data)
+        .then(response => {
+          this.invs = response
+        })
+    },
+    async get_user() {
+
+      await axios
+        .get(`user`).then(response => response.data)
+        .then(response => {
+          this.ref = 'ramabit.com/register/' + response.ref
+        })
+    },
+    copy() {
+      var copyText = document.getElementById("myInput");
+
+      // Select the text field
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); // For mobile devices
+
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText.value);
+
+      // Alert the copied text
+      document.querySelector('.copy-btn').innerHTML = document.querySelector('.copy-btn').innerHTML.replace('کپی', 'کپی شد')
+      setTimeout(() => {
+        document.querySelector('.copy-btn').innerHTML = document.querySelector('.copy-btn').innerHTML.replace('کپی شد', 'کپی')
+      }, 1000);
+    },
+
+    async get_wallets() {
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      await axios
+        .get(`wallets`)
+        .then(response => response.data)
+        .then(response => {
+          console.log(response)
+          this.walletsback = response
+          this.wallets = response
+          this.balances = 0
+          this.balancees = {
+            labels: [],
+            datasets: [
+              {
+                backgroundColor: [],
+                data: [],
+              },]
+          }
+          for (var item of response) {
+            if (item[1]) {
+              this.balancees.labels.push(item[2])
+              this.balancees.datasets[0].data.push(parseInt(parseFloat(item[1]) * parseFloat(item[5])))
+              this.balancees.datasets[0].backgroundColor.push(getRandomColor())
+
+              this.balances = this.balances + (parseFloat(item[1]) * parseFloat(item[5]))
+            }
+          }
+
+        })
+    },
   }
 }
 </script>

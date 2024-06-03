@@ -15,7 +15,7 @@ import moment from "moment-jalaali";
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'primevue/resources/themes/aura-light-green/theme.css'
-axios.defaults.baseURL = 'https://www.ryanai.ir/api/v1/'
+axios.defaults.baseURL = 'https://www.ramabit.com/api/v1/'
 
 
 const app = createApp(App)

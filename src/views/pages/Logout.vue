@@ -19,6 +19,7 @@ export default {
         logout() {
             axios.defaults.headers.common.Authorization = ''
             localStorage.removeItem('token')
+            localStorage.removeItem('uri')
             this.$store.commit('removeToken')
             this.$router.push('/')
             setTimeout(() => {
