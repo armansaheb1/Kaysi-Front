@@ -2,12 +2,12 @@
 <template>
   <CRow>
     <CCol v-for="item in currency " v-bind:key="item">
-      <img style="position:relative;width: 16%; margin: 5% 42%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
-        :src="item.get_image"><br>
-      <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
-        <div class="card wals" style="padding: 0 5%;">
-          <br>
 
+      <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
+        <div class="card" style="padding: 0 5%;">
+          <br>
+          <img style="position:relative;width: 16%; margin: 5% 42%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
+            :src="item.get_image"><br>
           <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
             :src="item.get_qr">
           <br>

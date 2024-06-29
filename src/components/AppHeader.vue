@@ -13,6 +13,7 @@
       </CHeaderNav>
 
       <CHeaderNav class="ms-auto">
+
         <CDropdown variant="nav-item" placement="bottom-end">
           <CDropdownToggle @click="notread()" :caret="false">
             <CIcon icon="cil-bell" size="lg" />
@@ -37,6 +38,7 @@
         </CDropdown>
 
       </CHeaderNav>
+
       <CHeaderNav>
         <li class="nav-item py-1">
           <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
@@ -73,9 +75,13 @@
         </li>
         <AppHeaderDropdownAccnt />
       </CHeaderNav>
+
     </CContainer>
     <CContainer class="px-4" fluid>
-      <AppBreadcrumb />
+      <a class="alert alert-secondary" style="padding: 5px;margin:5px; text-decoration: none; margin: auto;"> موجودی
+        دلاری :‌
+        ${{
+          parseInt(balances) }}</a>
     </CContainer>
   </CHeader>
 </template>
@@ -93,6 +99,64 @@ export default {
     AppHeaderDropdownAccnt,
   },
   methods: {
+    async get_user() {
+      var head = axios.defaults.headers
+      head['cache-control'] = 'no-cache'
+      await axios
+        .get(`user`).then(response => response.data, head)
+        .then(response => {
+          console.log(response)
+          if (!response) {
+            const toPath = this.$route.go || '/logout'
+            this.$router.push(toPath)
+          }
+          setTimeout(() => {
+            this.get_user()
+          }, 300000);
+          this.ref = 'ramabit.com/register/' + response.ref
+        })
+    },
+    async get_wallets() {
+      if (!this.$store.state.isAuthenticated) {
+        this.$store.state.loginpopmini = true
+      }
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      await axios
+        .get(`wallets`)
+        .then(response => response.data)
+        .then(response => {
+          console.log(response)
+          this.walletsback = response
+          this.wallets = response
+          this.balances = 0
+          this.balancees = {
+            labels: [],
+            datasets: [
+              {
+                backgroundColor: [],
+                data: [],
+              },]
+          }
+          for (var item of response) {
+            if (item[1]) {
+              this.balancees.labels.push(item[2])
+              this.balancees.datasets[0].data.push(parseInt(parseFloat(item[1]) * parseFloat(item[5])))
+              this.balancees.datasets[0].backgroundColor.push(getRandomColor())
+
+              this.balances = this.balances + (parseFloat(item[1]) * parseFloat(item[5]))
+            }
+          }
+
+        })
+    },
     changelang() {
       function setCookie(cname, cvalue) {
         var d = new Date();
@@ -111,6 +175,7 @@ export default {
         .get(`notifications`)
         .then(response => response.data)
         .then(response => {
+
           this.notifs = response
           this.unread = 0
           for (var item of response) {
@@ -125,8 +190,6 @@ export default {
         .post(`notifications`)
         .then(response => response.data)
         .then(response => {
-          this.notifs = response
-          this.unread = 0
           for (var item of response) {
             if (!item.read) {
               this.unread = this.unread + 1
@@ -138,14 +201,17 @@ export default {
 
   },
   mounted() {
+    this.get_user()
     this.get_notifs()
+    this.get_wallets()
     this.lang = this.$store.state.lang
   },
   data() {
     return {
       lang: 'fa',
       notifs: [],
-      unread: 0
+      unread: 0,
+      balances: 0,
     }
   },
 

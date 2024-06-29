@@ -14,7 +14,16 @@
 
               <form @submit.prevent="submitwith()">
 
-                <a style="float: right;text-align: right;">موجودی فعلی: {{ balance }}</a>
+                <a style="float: right;text-align: right;">موجودی فعلی:
+                  <a v-if="balance < 0.000001">
+                    {{ balance.toFixed(10) }}
+                  </a>
+                  <a v-else-if="balance > 100">
+                    {{ parseInt(balance) }}
+                  </a>
+                  <a v-else>
+                    {{ balance.toFixed(6) }}
+                  </a></a>
                 <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
                 <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
                 <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">

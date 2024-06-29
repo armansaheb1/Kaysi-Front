@@ -2,19 +2,11 @@
   "name": "@coreui/coreui-free-vue-admin-template",
   "version": "5.0.0-rc.0",
   "description": "CoreUI Free Vue Admin Template",
-  "bugs": {
-    "url": "https://github.com/coreui/coreui-free-vue-admin-template/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:coreui/coreui-free-vue-admin-template.git"
-  },
-  "license": "MIT",
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
-    "dev": "vite --force",
     "build": "vite build",
     "lint": "eslint \"src/**/*.{js,vue}\"",
+    "dev": "vite --force",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -35,6 +27,7 @@
     "moment": "^2.30.1",
     "moment-jalaali": "^0.10.0",
     "primevue": "^3.51.0",
+    "register-service-worker": "^1.7.2",
     "shamsi": "^1.1.6",
     "simplebar-vue": "^2.3.3",
     "vue": "^3.4.3",
@@ -42,17 +35,28 @@
     "vue-google-charts": "^1.1.0",
     "vue-router": "^4.2.5",
     "vue-sweetalert2": "^5.0.5",
+    "vue-trading-view": "^1.0.1",
     "vue3-puzzle-vcode": "^1.1.7",
     "vuejs-progress-bar": "^1.2.8",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.2",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/cli-plugin-pwa": "~5.0.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.19.2",
     "postcss": "^8.4.32",
     "sass": "^1.69.6",
-    "vite": "^5.0.10"
+    "vite": "^5.0.10",
+    "vite-plugin-pwa": "^0.20.0"
+  },
+  "bugs": {
+    "url": "https://github.com/coreui/coreui-free-vue-admin-template/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coreui/coreui-free-vue-admin-template.git"
   }
 }

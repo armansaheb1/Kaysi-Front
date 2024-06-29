@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <div style="width: 100%; top : 0; background-color: rgba(0, 0, 0, 0.4)">
+    <div style="width: 100%; top : 0; background-color: rgba(0, 0, 0, 0.0)">
       <img style="width: 100%;  z-index: -10000" src="/banner.jpg" alt="">
       <nav
         style="border-bottom: rgba(150,150,150,0.2) 1px solid; width: 100%; height: 80px ;position: absolute; top: 0; z-index:  100">
         <ul style="z-index:  100; margin : 0; list-style: none;">
-          <li style="margin-top: 16px" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="">
+          <li style="margin-top: 16px" class="lir"><a style="color: whitesmoke; text-decoration: none;" href="/">
               <img src="/logo.png" style="border-radius: 50%;height: 50px; border-radius: 50%;" alt="">
             </a>
           </li>
@@ -33,6 +33,46 @@
           </li>
         </ul>
       </nav>
+      <div class="nmob"
+        style="position: relative; padding: 10px; border-radius: 15px; background-color: rgba(0, 0, 0, 0.5);width: 35%;margin: auto; margin-bottom:14%; margin-top : -26%">
+        <a href="https://app.ramabit.com/ramabit.apk"
+          style="border-radius: 20px; margin: 10px;margin-left: 5%; width: 90% ; height: 40px;text-align: right ;"
+          class="btn btn-light"><img style="float: left;margin-top: 5px;"
+            src="https://moviejavan.net/lang_files/img/android.svg">نسخه
+          اندروید
+
+        </a>
+        <a href="https://app.ramabit.com"
+          style=" border-radius: 20px;margin: 10px;margin-left: 5%; width: 90% ; height: 40px;text-align: right ;"
+          class="btn btn-light"> IOS نسخه
+          <img style="float: left;" src="https://moviejavan.net/lang_files/img/ios.svg" alt=""></a>
+
+        <a @click="$store.state.loginpopmini = true"
+          style=" border-radius: 20px;margin: 10px;margin-left: 5%; width: 90% ; height: 40px;text-align: right ;"
+          class="btn btn-light"> نسخه وب
+          <img style="margin-top: 5px;float: left;" src="https://moviejavan.net/lang_files/img/web.svg" alt=""></a>
+      </div>
+
+      <div class="mob">
+        <a href="https://app.ramabit.com/ramabit.apk"
+          style="border-radius: 20px; margin: 10px;margin-left: 15%; width: 70% ; height: 40px;text-align: right ;box-shadow:lightgrey -1px 2px"
+          class="btn btn-light"><img style="float: left;margin-top: 5px;"
+            src="https://moviejavan.net/lang_files/img/android.svg">نسخه
+          اندروید
+
+        </a>
+        <a href="https://app.ramabit.com"
+          style=" border-radius: 20px;margin: 10px;margin-left: 15%; width: 70% ; height: 40px;text-align: right ;box-shadow:lightgrey -1px 2px"
+          class="btn btn-light"> IOS نسخه
+          <img style="float: left;" src="https://moviejavan.net/lang_files/img/ios.svg" alt=""></a>
+
+        <a @click="$store.state.loginpopmini = true"
+          style=" border-radius: 20px;margin: 10px;margin-left: 15%; width: 70% ; height: 40px;text-align: right ;box-shadow:lightgrey -1px 2px"
+          class="btn btn-light"> نسخه وب
+          <img style="margin-top: 5px;float: left;" src="https://moviejavan.net/lang_files/img/web.svg" alt=""></a>
+      </div>
+      <hr>
+
 
     </div>
     <div style="clear: both"></div>
@@ -40,7 +80,6 @@
       <h3 style="width: 100%; text-align: center">
         چرا کی سی؟
       </h3>
-      <br>
 
       <div style="padding: 5%">
         <div v-for="item in stickers" v-bind:key="item" style="height: 500px;" class=" card third">
@@ -138,8 +177,10 @@ export default {
 
 <style>
 .lil {
-  float: left;
-  margin: 18px 15px
+  position: absolute;
+  top: 25px;
+
+  left: 5px
 }
 
 .lir {
@@ -199,8 +240,10 @@ export default {
   }
 
   .lil {
-    float: left;
-    margin: 25px 5px
+    position: absolute;
+    top: 25px;
+
+    left: 5px
   }
 
   .lir {

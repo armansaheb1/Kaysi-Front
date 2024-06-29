@@ -5,7 +5,6 @@
       <input @input="search()" v-model="searchtxt" type="text" class="form-control" placeholder="... جستوجو"
         style="text-align: right;" name="" id=""><br>
 
-      <label for="" style="text-align: right;width: 100%;">از این قسمت ارز مورد نظر را انتخاب کنید</label>
       <select v-model="cur" style="text-align: center;" @change="get_miners()" name="" class="form-control" id="">
         <option :value="''">
           همه
@@ -20,14 +19,15 @@
           اجاره ماینر
         </CCardHeader>
         <CCardBody>
-          <CCard v-for="item in miners" v-bind:key="item" style="margin-bottom: 15px" class="third">
+          <CCard
+            :style="[dark ? { 'border-color': 'silver', 'background': 'black', 'color': 'white' } : { 'border-color': 'gold', 'background': 'white', 'color': 'black' }]"
+            v-for="item in miners" v-bind:key="item" style="margin-bottom: 15px;border-radius: 10px;" class="third">
             <CCardHeader style="height: 60px;font-size: 14px;font-weight: bold;">
               {{ item.title }}
               <img :src="item.get_cur_pic" alt="" style="position:relative; top: 5px; z-index: 10;width: 10%">
             </CCardHeader>
             <CCardBody>
-
-              <img :src="item.get_pic" style="width: 50%; margin: 2.5% 25%;" alt="">
+              <img :src="item.get_pic" style="width: 100px;height:100px; margin: 2.5% 25%;" alt="">
 
             </CCardBody>
 
@@ -42,11 +42,11 @@
               <p style="direction: rtl;text-align: right;">
                 دوره اجاره : {{ item.period }} روز
                 <br>
-                هزینه اجاره ماهیانه : {{ item.price }}<a style="font: 10px arial;margin-left: 5px;">USDT</a>
+                هزینه اجاره دوره : {{ item.price }}<a style="font: 10px arial;margin-left: 5px;">USDT</a>
                 <br>
                 هش ریت : {{ item.rate }}<a style="font: 10px arial;margin-left: 5px;">Th/s</a>
                 <br>
-                میزان سود ماهیانه : {{ item.profit }}<a style="font: 10px arial;margin-left: 5px;">{{ item.get_cur
+                میزان سود دوره : {{ item.profit }}<a style="font: 10px arial;margin-left: 5px;">{{ item.get_cur
                   }}</a>
               </p>
               <input v-model="item.amount" type="number" placeholder="تعداد ماینر درخواستی" style="text-align: center;"
@@ -85,7 +85,8 @@ export default {
     searchtxt: '',
     cur: '',
     curs: [],
-    balance: 0
+    balance: 0,
+    dark: false,
 
   }),
   components: {
@@ -93,9 +94,16 @@ export default {
   mounted() {
     this.get_currencies()
     this.get_wal()
+    this.getloc()
 
   },
   methods: {
+    getloc() {
+      this.dark = localStorage.getItem('coreui-free-vue-admin-template-theme') == 'light'
+      setTimeout(() => {
+        this.getloc()
+      }, 1000);
+    },
     login() {
       this.$store.state.showloginindex = true
     },
@@ -165,8 +173,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .lil {
-  float: left;
-  margin: 18px 15px
+  position: absolute;
+  top: 25px;
+
+  left: 5px
 }
 
 .lir {
@@ -206,8 +216,10 @@ export default {
   }
 
   .lil {
-    float: left;
-    margin: 25px 5px
+    position: absolute;
+    top: 25px;
+
+    left: 5px
   }
 
   .lir {

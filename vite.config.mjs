@@ -2,6 +2,8 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
 import autoprefixer from 'autoprefixer'
+import { VitePWA } from 'vite-plugin-pwa'
+
 
 export default defineConfig(({ mode }) => {
   // Load .env
@@ -9,7 +11,7 @@ export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...env }
 
   return {
-    plugins: [vue()],
+    plugins: [VitePWA(),vue(),],
     base: '/',
     css: {
       postcss: {

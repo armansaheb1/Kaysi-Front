@@ -1,5 +1,5 @@
 <template>
-  <Vcode :show="isShowl" @success="register()" @close="onClose" />
+  <Vcode successText="باموفقیت انجام شد" sliderText="Slide" :show="isShowl" @success="register()" @close="onClose" />
   <div class="bg-body-tertiary min-vh-100  align-items-center"
     style="width: 100%;padding-top: 90px;overflow-y: auto; overflow-x: hidden;max-height: 350px; background: url(/regback.png);background-size: 100% 100%;">
 
@@ -71,6 +71,10 @@
               </CInputGroup>
               <div class="d-grid">
                 <button type="submit" class="btn btn-success">ساخت حساب کاربری</button>
+
+                <br>
+                <a style="color: blue; cursor: pointer" @click="$store.state.registerpop = false;"> بازکشت به صفحه
+                  ورود</a>
               </div>
             </form>
           </CCardBody>
@@ -82,6 +86,7 @@
 
 <script>
 import axios from 'axios'
+import { Logger } from 'sass';
 import Vcode from "vue3-puzzle-vcode";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -114,12 +119,32 @@ export default {
           }
 
           ).catch(data => {
-            this.isShowl = false
-            this.myerror = 'کلمه عبور پیچیده تری انتخاب کنید'
+            this.isShowl = false;
+            console.log(data.response.data)
+            for (var [key, value] of Object.entries(data.response.data)) {
+              if (key === 'password')
+                this.myerror = this.myerror + 'پسورد باید بیش از ۸ کاراکتر دارای عدد و حروف باشد و شبیه به نام کاربری نباشد' + '\n'
+
+            }
+            if (key === 'username') {
+              this.myerror = this.myerror + 'نام کاربری قبلا ثبت شده است' + '\n'
+
+            }
+            if (key === 'email') {
+              this.myerror = this.myerror + 'فرمت ایمیل غلط است ' + '\n'
+
+            }
+            if (key === 'mobile') {
+              this.myerror = this.myerror + 'فرمت موبایل غلط است ' + '\n'
+
+            }
+            setTimeout(() => {
+              this.myerror = ''
+            }, 3000);
           })
       } else {
         this.myerror = ' پسورد با تکرار یکی نیست'
-        this.isShow = false
+        this.isShowl = false
       }
     }
   }

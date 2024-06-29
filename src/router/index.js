@@ -23,6 +23,11 @@ const routes = [
         component: () => import('@/views/pages/Registerinv'),
       },
       {
+        path: 'login',
+
+        component: () => import('@/views/pages/Loginpage'),
+      },
+      {
         path: 'register',
 
         component: () => import('@/views/pages/Register'),

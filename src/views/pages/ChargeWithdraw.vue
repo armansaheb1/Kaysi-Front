@@ -3,9 +3,19 @@
   <CRow>
     <CCol>
       <div v-for="item in currency " v-bind:key="item">
-        <img style="position:relative;width: 20%; margin: 0 40%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
+        <img style="position:relative;width: 15%; margin: 0 42.5%; margin-top: 0px;float:left; aspect-ratio: 1/1;"
           :src="item.get_image">
-      </div><br><br><br><br>
+      </div>
+      <div style="clear: both;"></div><br>
+
+      <!-- <div class="card" style="">
+        <VueTradingView style="width:100%" :options="{
+          symbol: `BINANCE:USDT`,
+          theme: getloc(),
+          width: get_width(),
+          height: 200
+        }" />
+      </div> -->
 
 
       <div class="autoplay" style="width: 100%;margin: auto;height:auto;overflow-y:hidden;">
@@ -51,7 +61,16 @@
 
 
             <form @submit.prevent="submitwith()">
-              <h5 style="text-align: center;">موجودی : {{ item[1] }}</h5>
+              <h5 style="text-align: center;">موجودی : <a v-if="item[1] < 0.000001">
+                  {{ item[1].toFixed(10) }}
+                </a>
+                <a v-else-if="item[1] > 100">
+                  {{ parseInt(item[1]) }}
+                </a>
+                <a v-else>
+                  {{ item[1].toFixed(6) }}
+                </a>
+              </h5>
               <input class="form-control" type="text" v-model="amount2" placeholder="مبلغ"><br>
               <input class="form-control" type="text" v-model="link2" placeholder="آدرس ولت"><br>
               <button class="btn btn-success  form-control" id="amreqn" style=" font-family: 'Yekan'!important;">
@@ -71,12 +90,15 @@
 <script>
 
 import axios from 'axios'
-
+import VueTradingView from 'vue-trading-view/src/vue-trading-view';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Index',
   props: {
     msg: String,
+  },
+  components: {
+    VueTradingView,
   },
   data: () => ({
     showModal: [],
@@ -94,6 +116,13 @@ export default {
     this.get_currency2()
   },
   methods: {
+    getloc() {
+      return localStorage.getItem('coreui-free-vue-admin-template-theme')
+    },
+    get_width() {
+      return window.innerWidth * 0.7
+
+    },
     login() {
       this.$store.state.showloginindex = true
     },

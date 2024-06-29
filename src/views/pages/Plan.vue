@@ -19,14 +19,17 @@
               </option>
             </select>
             <br>
+
             <label for="">پلن</label>
             <select v-if="currency" v-model="plan" class="form-control">
               <option v-for="item in plans" v-bind:key="item" :value="item.id">
                 {{ item.title }}
               </option>
             </select><br>
+
             <label for="">مبلغ</label>
-            <input class="form-control" v-model="amount" type="text" name="" id=""><br><br>
+            <input class="form-control" v-model="amount" type="text" name="" id="">
+            <a v-if="cur[0]" style="font-size: 12px;"> موجودی : {{ cur[0][1] }}</a><br><br>
             <input v-model="option" type="radio" style="width: 30px;" name="option" value="add" id="months" required>
             <label for="months">اضافه شدن سود به پلن</label><br>
             <input v-model="option" type="radio" style="width: 30px;" name="option" value="wal" id="days" required>
@@ -59,7 +62,8 @@ export default {
     plan: '',
     pic: '',
     amount: '',
-    option: 'add'
+    option: 'add',
+    cur: []
   }),
   components: {
   },
@@ -84,6 +88,15 @@ export default {
           this.get_plans()
         })
     },
+    async get_currency() {
+      await axios
+        .post(`wallets/${this.currency}`)
+        .then(response => response.data)
+        .then(response => {
+          console.log(response)
+          this.cur = response
+        })
+    },
     async get_image(id) {
       await axios
         .get(`currencies/${id}`)
@@ -94,6 +107,7 @@ export default {
         })
     },
     async get_plans() {
+      this.get_currency()
       await axios
         .get(`plan-by-currency/${this.currency}`)
         .then(response => response.data)

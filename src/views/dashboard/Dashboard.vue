@@ -25,14 +25,13 @@
 
         </CCard><br>
 
+        <br>
         <CCard>
           <CCardHeader>
-            لینک دعوت دوستان
-          </CCardHeader>
-
+            مدیریت مجموعه گیری </CCardHeader>
           <CCardBody style="background-color: rgba(255,255,255,0.15);text-align: right;">
             <CInputGroup class="mb-3">
-              <CInputGroupText @click="copy()" class="copy-btn">
+              <CInputGroupText style="cursor:pointer" @click="copy()" class="copy-btn">
                 کپی
               </CInputGroupText>
               <input style="text-align: left;" class="form-control" id="myInput" required v-model="ref"
@@ -40,23 +39,18 @@
             </CInputGroup>
 
           </CCardBody>
-        </CCard>
-
-        <br>
-        <CCard>
-          <CCardHeader>
-            زیر مجموعه ها
-          </CCardHeader>
-          <CCardHeader style="text-align: center;background-color: beige;">
+          <CCardHeader style="text-align: center;background-color: beige;margin-top:-10px">
             سطح ۱
           </CCardHeader>
 
-          <CCardBody style="background-color: rgba(255,255,255,0.15);text-align: right;">
+          <CCardBody v-if="false" style="background-color: rgba(255,255,255,0.15);text-align: right;">
+
             <CCard style="width: 24%;float: right;margin: .5%">
 
             </CCard>
 
           </CCardBody>
+          <br><br>
         </CCard>
       </CCol>
     </CRow>

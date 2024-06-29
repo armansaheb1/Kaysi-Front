@@ -16,6 +16,7 @@ import moment from "moment-jalaali";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 axios.defaults.baseURL = 'https://www.ramabit.com/api/v1/'
+axios.defaults.headers['cache-control'] = 'max-age=3600'
 
 
 const app = createApp(App)

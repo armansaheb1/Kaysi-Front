@@ -18,7 +18,7 @@
       </CDropdownItem>
       <CDropdownDivider />
       <CDropdownItem>
-        <CIcon href="" icon="cil-lock-locked" /><a style="text-decoration: none;color: var(--cui-dropdown-link-color)"
+        <CIcon href="/" icon="cil-lock-locked" /><a style="text-decoration: none;color: var(--cui-dropdown-link-color)"
           href="/logout"> خروج</a>
       </CDropdownItem>
     </CDropdownMenu>

@@ -13,7 +13,7 @@ export default [
   },
   {
     component: 'CNavItem',
-    name: 'موجودی ها',
+    name: 'ولت',
     to: '/balances',
     icon: 'cil-dollar',
   },

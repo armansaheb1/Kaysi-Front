@@ -5,7 +5,7 @@
       <AppHeader />
       <div class="body flex-grow-1">
         <CContainer class="px-4" lg>
-          <div class="alert alert-warning" style="text-align: right;" v-if="detail">
+          <div class="alert alert-warning wals" style="text-align: right;" v-if="detail">
             <h4>{{ detail.title }}</h4>
             <p>{{ detail.text }}</p>
           </div>

@@ -120,8 +120,10 @@ export default {
 </script>
 <style>
 .lil {
-  float: left;
-  margin: 18px 15px
+  position: absolute;
+  top: 25px;
+
+  left: 5px
 }
 
 .lir {
@@ -181,8 +183,10 @@ export default {
   }
 
   .lil {
-    float: left;
-    margin: 25px 5px
+    position: absolute;
+    top: 25px;
+
+    left: 5px
   }
 
   .lir {

@@ -25,9 +25,9 @@
         </CCardBody>
 
       </CCard><br>
-      <input @input="search()" v-model="searchtxt" type="text" placeholder="...جستوجو " style="text-align: center;"
-        class="form-control"><br>
-      <CCard>
+      <input @input="search()" v-model="searchtxt" type="text" placeholder="...جستوجو "
+        style="text-align: center; border-radius: 5px 5px  0 0" class="form-control">
+      <CCard style="border-radius: 0 0 5px 5px;">
         <CCardHeader>
           موجودی حساب ها
 
@@ -313,9 +313,10 @@ export default {
         }
         return color;
       }
-
+      var head = axios.defaults.headers
+      head['cache-control'] = 'no-cache'
       await axios
-        .get(`wallets`)
+        .get(`wallets`, head)
         .then(response => response.data)
         .then(response => {
           console.log(response)
@@ -333,7 +334,7 @@ export default {
           for (var item of response) {
             if (item[1]) {
               this.balancees.labels.push(item[2])
-              this.balancees.datasets[0].data.push(parseInt(parseFloat(item[1]) * parseFloat(item[5])))
+              this.balancees.datasets[0].data.push(parseInt(item[1]) * parseFloat(item[5]))
               this.balancees.datasets[0].backgroundColor.push(getRandomColor())
 
               this.balances = this.balances + (parseFloat(item[1]) * parseFloat(item[5]))

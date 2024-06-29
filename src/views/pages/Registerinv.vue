@@ -31,7 +31,7 @@
     </nav>
 
   </div>
-  <Vcode :show="isShowl" @success="register()" @close="onClose" />
+  <Vcode successText="باموفقیت انجام شد" sliderText="Slide" :show="isShowl" @success="register()" @close="onClose" />
   <div class="bg-body-tertiary min-vh-100  align-items-center"
     style="padding-top: 150px;width: 100%;padding-top: 150px;overflow-y: auto; overflow-x: hidden;max-height: 350px; background: url(/regback.png);background-size: 100% 100%;">
 
@@ -184,8 +184,10 @@ export default {
 </script>
 <style>
 .lil {
-  float: left;
-  margin: 18px 15px
+  position: absolute;
+  top: 25px;
+
+  left: 5px
 }
 
 .lir {
@@ -245,8 +247,10 @@ export default {
   }
 
   .lil {
-    float: left;
-    margin: 25px 5px
+    position: absolute;
+    top: 25px;
+
+    left: 5px
   }
 
   .lir {

@@ -74,8 +74,7 @@
             <tbody v-if="mob" v-for="item in plans " v-bind:key="item">
               <tr style="border-color: transparent;">
                 <td colspan="3" style=" text-align: center;width: 100%;"><img
-                    style="position:relative;height: 100%; aspect-ratio:1/1; margin: auto;width: 15%;"
-                    :src="item.get_image">
+                    style="position:relative; aspect-ratio:1/1; margin: auto;width: 15%;" :src="item.get_image">
 
                 </td>
               </tr>
